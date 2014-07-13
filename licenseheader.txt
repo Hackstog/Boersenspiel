@@ -1,0 +1,5 @@
+/**
+ * HS Augsburg
+ * Programmieren 2 - Bachelor Informatik
+ * SS 2014
+ */

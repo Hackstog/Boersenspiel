@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Börsenspiel Changelog</title>
+        <meta charset="UTF-8">
+        <style type="text/css">
+            *{font-family: Verdana; font-size: 11pt}
+            body{padding: 15px; padding-bottom: 50px;}
+            h1{font-size: 14pt; margin-bottom: -17px;}
+            h2{font-size: 12pt; margin-left: 20px; margin-bottom: -10px; margin-top: 30px}
+            ul{font-size: 10pt; font-weight: bold; margin-left: 5px; margin-bottom: -10px}
+            div{border: 1px solid #a6a6a6; padding: 20px; padding-top: 5px; padding-bottom: 5px; margin-bottom: 40px}
+            li:not(:first-child){list-style-type: none; font-weight: normal}
+            .todo li{font-weight: normal; list-style-type: disc}
+        </style>
+    </head>
+    <body>
+        <div style="width:470px">
+            <h1>Börsenspiel</h1>
+            <p>Hochschule Augsburg<br />Praktikum Programmieren 2  -  Studiengang Bachelor Informatik<br />Sommersemester 2014</p>
+            <p>Autor:  Daniel Heigl &lt;daniel.heigl@hs-augsburg.de&gt;<br />Aktuelle Version:  5.0b</p>
+        </div>
+        
+        <h1 style="margin-bottom: -30px">Changelog</h1>
+        
+        <h2>2014-05-29</h2>
+        <ul>
+            <li>Version 1.0</li>
+            <li>Klassen <i>Share</i>, <i>ShareItem</i>, <i>ShareDepositAccount</i>, <i>CashAccount</i> und <i>Asset</i></li>
+        </ul><ul>
+            <li>Version 1.1</li>
+            <li><i>ShareDepositAccount</i> auf Verkettete Liste umgestellt</li>
+            <li>Klasse <i>Test</i> mit <i>Main</i>-Methode erstellt</li>
+        </ul><ul>
+            <li>Version 2.0</li>
+            <li>Interface <i>AccountManager</i></li>
+        </ul>
+        
+        <h2>2014-05-30</h2>
+        <ul>
+            <li>Version 2.1</li>
+            <li>Implementierung <i>AccountManagerImpl</i> des Interface <i>AccountManager</i></li>
+            <li>Klasse <i>Player</i></li>
+            <li><i>Main</i>-Methode um <i>AccountManager</i>-Test erweitert</li>
+            <li>Projekt aufgeteilt in Packages (<i>Asset</i>, <i>AccountManager</i>, <i>Spieler</i>)</li>
+        </ul>
+        <ul>
+            <li>Version 2.2</li>
+            <li>Exceptions (<i>NotEnoughMoneyException</i>, <i>ShareNotFoundException</i>, <i>PlayerNotFoundException</i>, <i>NotEnoughSharesException</i>, <i>PlayerExistsException</i>, <i>WrongNumberException</i>) + Exceptions-Package</li>
+        </ul>
+        <ul>
+            <li>Version 3.0</li>            
+            <li><i>StockPrice</i>-Package hinzugefügt</li>
+            <li>Interface <i>StockPriceInfo</i></li>
+            <li>Klassen <i>StockPriceProvier</i>, <i>ConstStockPriceProvier</i>, <i>RandomStockPriceProvier</i>, <i>StockTimer</i>,</li>
+            <li><i>Timer</i>-Package hinzugefügt</li>
+        </ul>
+        <ul>
+            <li>Version 3.1</li>
+            <li>Grafische Ausgabe</li>
+            <li><i>Viewer</i>-Package hinzugefügt</li>
+            <li><i>StockPriceViewer</i></li>
+        </ul>
+        <ul>
+            <li>Version 3.2</li>
+            <li><i>Launcher</i>-Package hinzugefügt</li>
+            <li>Klassen <i>StockGameLauncher</i> und <i>PlayerViewer</i>hinzugefügt</li>
+        </ul>
+        <ul>
+            <li>Version 4.0</li>
+            <li>Steuerung durch Kommandozeileneingabe</li>
+            <li><i>Command</i>-Package hinzugefügt</li>
+            <li><i>Spieler</i>-Package umbenannt in <i>Player</i> (einheitlich englische Namen)</li>
+            <li>Enum <i>StockGameCommandType</i> hinzugefügt</li>
+            <li>Interface <i>CommandTypeInfo</i> hinzugefügt</li>
+            <li>Klassen <i>CommandScanner</i> und <i>CommandDescriptor</i> hinzugefügt</li>
+        </ul>
+        <ul>
+            <li>Version 4.1</li>
+            <li>Switch-Case-Anweisung entfernt: Befehlsauswahl direkt über Enum</li>        
+        </ul>
+        
+        <h2>2014-05-31</h2>
+        <ul>
+            <li>Version 4.1.1</li>
+            <li>Kontostand in <i>toString</i>-Methode der Klasse <i>Player</i> korrekt in Euro mit 2 Dezimalstellen formatiert</li>
+            <li><i>buyShare</i>-Methode in <i>AccountManagerImpl</i> überarbeitet (ermöglicht Nachkaufen bereits vorhandener Aktien, ohne ein neues Aktienpaket zu erstellen)</li>
+            <li><i>sellShare</i>-Methode in <i>AccountManagerImpl</i> überarbeitet (Aktienpakete die nach Verkauf leer sind werden aus Aktiendepot gelöscht)</li>
+        </ul>
+        <ul>
+            <li>Version 4.2</li>
+            <li><i>TradeAgent</i> Verhalten festgelegt</li>
+        </ul>
+        <ul>
+            <li>Version 4.2.1</li>
+            <li>Für Agent nötige Methoden in <i>AccountManager</i> und <i>AccountManagerImpl</i> ergänzt</li>
+            <li>Befehl zum Starten des Agent in <i>StockGameCommandType</i> und <i>StockGameCommandProcessor</i> ergänzt</li>
+            <li><i>TradeAgent</i> fertig gestellt</li>
+            <li>Fehler in <i>ShareDepositAccount</i> behoben: Liste speichert jetzt alle Elemente (zuvor höchstens 2)</li>
+        </ul>
+        <ul>
+            <li>Version 4.2.2</li>
+            <li>Kommentare überarbeitet + ergänzt</li>
+            <li><i>StockPriceViewer</i> und <i>PlayerViewer</i> zusammengefasst in gemeinsames Viewer-Fenster (Klasse <i>AllViewer</i>)</li>
+        </ul>
+        <ul>        
+            <li>Version 4.2.3</li>
+            <li>Kommentare vervollständigt + Annotations</li>
+        </ul>
+        <ul>
+            <li>Version 5.0</li>
+            <li>Logging für Aktienkauf</li>
+            <li>Logging.properties angelegt</li>
+        </ul>
+        
+                
+        <h2>2014-06-01</h2>
+        <ul> 
+            <li>Version 5.0a</li>
+            <li><i>AccountManagerProxy</i> hinzugefügt</li>
+        </ul>
+        <ul>
+            <li>Version 5.0a.1</li>
+            <li>Code-Hinweise von Netbeans abgearbeitet: for-Schleifen zu for-each-Schleifen umgewandelt, Attribute als 'private' deklariert und wo möglich als 'final', unnötige Import entfernt</li>        
+            <li><i>AccountManagerImpl</i>-Attribute durch  Attribute des Interface <i>AccountManager</i> ersetzt</li>
+        </ul>
+        <ul>
+            <li>Version 5.0b</li>
+            <li>Logging überarbeitet: Ausgabe in Textform in Datei <i>Log.txt</i> und als HTML-Tabelle in <i>Log.html</i></li>
+            <li>Klasse <i>HTMLFormatter</i> zur Definition der HTML-Datei erstellt</li>
+        </ul>
+        <ul>
+            <li>Version 5.1</li>
+            <li>JUnit-Tests zu <i>CashAccount</i>, <i>ShareItem</i> und <i>ShareDepositAccount</i></li>
+            <li>JUnit-Testklassen <i>PlayerTest</i> und <i>AccountManagerTest</i></li>
+        </ul>
+        <ul>
+            <li>Version 5.1.1</li>
+            <li>Weiter Testklassen: <i>ShareTest</i> und <i>StockPriceProviderTest</i></li>
+        </ul>
+        <ul>
+            <li>Version 5.1.2</li>
+            <li>JavaDoc-Kommentare nachgebessert (Warnmeldungen beim Erstellen abgearbeitet)</li>
+            <li><i>StockGameLauncher</i> umgebaut: main-Methode fängt Exceptions ab, wirft keine mehr weiter</li>
+        </ul>
+        <ul>
+            <li>Version 5.1.3</li>
+            <li>Paket <i>GameParameters</i> mit Klasse <i>ConcstantValues</i> angelegt: Spielparameter zentral in einer Datei festgelegt (Erleichtert Änderung)</li>
+        </ul>
+        
+        
+        <h2>2014-07-10</h2>
+        <ul>
+            <li>Version 6.0</li>
+            <li>Arrays durch Collections ersetzt in <i>AccountManager</i>, <i>AccountManagerImpl</i>, <i>Share</i>, <i>CommandDescriptor</i>,
+                <i>CommandScanner</i>, <i>CommandTypeInfo</i>, <i>StockGameCommandType</i>, <i>StockGameCommandType</i>, <i>Player</i>, <i>TradeAgent</i>
+                <i>StockPriceInfo</i>, <i>StockPriceProvider</i>, <i>PlayerViewer</i> und <i>AllViewer</i>
+            </li>
+            <li>Klasse <i>CollectionObjectFinder</i> und Package <i>HelpClasses</i></li>
+            <li>Klasse <i>Share</i> Comparable gemacht</li>  
+        </ul>
+        <h2>2014-07-13</h2>
+        <ul>
+            <li>Version 6.1</li> 
+            <li>Klasse <i>Transaction</i> zur Verwaltung der Transaktionen eines Spielers + Methoden zum Aufruf in <i>AccountManagerImpl</i> und <i>Player</i></li>
+        </ul>
+        
+        
+        <!--         
+        <h2>2014-06-01</h2>
+        <ul>
+            <li>Version 7.0</li>
+            <li>Build-File <i>Build.xml</i> erstellt mit folgenden Targets erstellt: Programm übersetzen (Ohne Tests), Tests übersetzen, JAR erstellen, Java-Doc generieren, Programm ausführen, Tests ausführen</li>
+        </ul>
+        -->
+        
+        <br /><br /><h2>To do:</h2>
+        <ul class="todo">
+            <li>TradeAgent: Kontostand sinkt mit der Zeit</li>
+            <li>Logging: Rückgabetyp</li>
+            <li>Build.xml: Jar zum laufen kriegen</li>
+        </ul>
+    </body>
+</html>
