@@ -24,8 +24,8 @@ public enum StockGameCommandType implements CommandTypeInfo{
     GETCASH ("getValueOfCashAccount", "<playername> * get cashaccountvalue of that player", String.class),
     GETDEPOSIT ("getValueOfDepositAccount", "<playername> * get depositaccountvalue of that player", String.class),
     STARTAGENT ("startAgent", "<playername> * start the tradeagent for that player", String.class),
-    GETTRANSACTIONS ("getTransactions", "<playername> <sortKey> * list transactions of a player, sorted <t> for timer or <s> for Share", String.class, String.class),
-    GETTRANSACTIONSWITHSHARE ("getTransactionsWithShare", "<playername> <shareName> * list transactions of a player containing the givven Share", String.class, String.class);
+    GETTRANSACTIONS ("getTransactions", "<playername> <sortKey> <printType> * list transactions of a player, sorted <t> for timer or <s> for Share", String.class, String.class),
+    GETTRANSACTIONSWITHSHARE ("getTransactionsWithShare", "<playername> <shareName> <printType> * list transactions of a player containing the givven Share", String.class, String.class);
     
     private final String commandoName;
     private final String helpText;
@@ -62,7 +62,17 @@ public enum StockGameCommandType implements CommandTypeInfo{
     public String getCommandoName(){
         return this.commandoName;
     }
-          
+    
+    /**
+     * Liefert die Parameter eines Kommandos zurück
+     * @return 
+     */
+    @Override
+    public List <Class <?>> getParamTypes() 
+    {
+	return this.parameter;
+    }
+    
     /**
      * Führt das übergebene Kommando aus
      * @param commandType: CommdTypeInfo[]
@@ -92,12 +102,6 @@ public enum StockGameCommandType implements CommandTypeInfo{
                 method.invoke(am, params.toArray());
                 break;
         }
-    }
-    
-    @Override
-    public List <Class <?>> getParamTypes() 
-    {
-	return this.parameter;
     }
     
     /**

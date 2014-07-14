@@ -71,7 +71,10 @@ public class Transaction implements Comparable<Transaction>{
      * Legt den Schlüssel der Sortierung fest
      * @param s
      */
-    public static void setSortKey(String s){
+    public static void setSortKey(String s) throws IllegalArgumentException{
+        if(!(s.equals("s")) && !(s.equals("t"))){
+            throw new IllegalArgumentException("Ungültiger Sortierschlüssel");
+        }
         sortKey = s;
     }
     

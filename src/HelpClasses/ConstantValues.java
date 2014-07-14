@@ -6,7 +6,7 @@
  */
 
 
-package GameParameters;
+package HelpClasses;
 /**
  * Definiert Parameter des Projekts
  * 
@@ -25,7 +25,7 @@ public class ConstantValues {
     /**
      * Wert um den der Aktienkurs höher sein muss als der Einkaufspreis, damit der TradeAgent Aktien verkauft
      */
-    public static final int SELLDIFF = 30;
+    public static final int SELLDIFF = 10;
     
     /**
      * Anteil der gehaltenen Aktien den der TradeAgent verkaufen soll
@@ -36,7 +36,7 @@ public class ConstantValues {
     /**
      * Legt fest, wie oft der Aktienkurs gefallen sein soll, bevor der TradeAgent Aktien kauft
      */
-    public static final int BUYWHEN = 4;
+    public static final int BUYWHEN = 2;
     
     /**
      * Legt fest, wie viele Aktien der TradeAgent Maximal kaufen darf
@@ -46,5 +46,5 @@ public class ConstantValues {
     /**
      * Maximale Anzahl an Einträgen in der Transaktionsliste
      */
-    public static final int MAXTRANSACTIONS = 20;
+    public static final int MAXTRANSACTIONS = 50;
 }

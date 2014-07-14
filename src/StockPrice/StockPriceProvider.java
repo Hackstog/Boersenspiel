@@ -13,6 +13,7 @@ import Timer.StockTimer;
 import HelpClasses.CollectionObjectFinder;
 import java.util.TimerTask;
 import java.util.TreeSet;
+import java.util.HashMap;
 
 /**
  * Implementiert das Interface StockPriceInfo
@@ -22,7 +23,8 @@ abstract public class StockPriceProvider implements StockPriceInfo{
      * Shares als TreeSet wegen Sortierung
      */
     public TreeSet<Share> shares;
-
+    public HashMap<String, Long> shareMap = new HashMap<>();
+    
     /**
      * Ruft den Timer als Singleton auf
      */
@@ -38,6 +40,9 @@ abstract public class StockPriceProvider implements StockPriceInfo{
         shares.add(new Share("Siemens", 210));
         shares.add(new Share("Google", 370));
         shares.add(new Share("Microsoft", 150));
+        for (Share s : shares){
+            shareMap.put(s.getName(), s.getWert());
+        }
     }
     
     /**
@@ -48,10 +53,8 @@ abstract public class StockPriceProvider implements StockPriceInfo{
     @Override
     public boolean isShareListed(Share share){
         boolean b = false;
-        for (Share share1 : shares) {
-            if (share1.equals(share)) {
-                b = true;
-            }
+        if(shareMap.containsKey(share.getName())){
+            b = true;
         }
         return b;
     }

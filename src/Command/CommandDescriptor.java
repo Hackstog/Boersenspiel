@@ -58,13 +58,6 @@ public class CommandDescriptor {
             }catch(final ClassCastException e){
 		this.getParams().add(Integer.parseInt((String)params[i]));
             }
-//            if(i != 0){
-//                try{
-//                    this.getParams().add(commandTypeInfo.getParamTypes().get(i).cast(params[i]));
-//                }catch(ClassCastException e){
-//                    this.getParams().add(Integer.parseInt((String)params[i]));
-//                }
-//            }
         }
     }
 }

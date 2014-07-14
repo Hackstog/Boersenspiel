@@ -10,11 +10,7 @@ package AccountManager;
 import Assets.Share;
 import Player.Player;
 import Player.TradeAgent;
-import HelpClasses.Transaction;
 import StockPrice.StockPriceProvider;
-import Exceptions.PlayerExistsException;
-import Exceptions.PlayerNotFoundException;
-import Exceptions.ShareNotFoundException;
 import java.util.List;
 
 /**
@@ -36,6 +32,6 @@ public interface AccountManager {
     public String getShares();
     public void startAgent(String playerName) throws Exception;
     public StockPriceProvider getStockPriceProvider();
-    public void getTransactions(String playerName, String sorted) throws Exception;
-    public void getTransactionsWithShare(String playerName, String shareName) throws Exception;
+    public void getTransactions(String playerName, String sorted, String printType) throws Exception;
+    public void getTransactionsWithShare(String playerName, String shareName, String printType) throws Exception;
 }

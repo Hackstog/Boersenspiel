@@ -68,15 +68,10 @@ public class Share extends Asset implements Comparable<Share>{
     }
 
     /**
-     * Laut Netbeans-Warnhinweis empfohlen, wenn equals-Metode überschrieben wird
-     * @return Hashwert als Int 
+     * compareTo zum Vergleich der Aktien in TreeSet-Collection
+     * @param share
+     * @return 
      */
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        return hash;
-    }
-    
     @Override
     public int compareTo (Share share){
         return name.compareTo(share.getName());

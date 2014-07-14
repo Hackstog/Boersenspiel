@@ -14,7 +14,9 @@ import java.util.logging.Logger;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.TreeSet;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 import Assets.Share;
 import Assets.ShareItem;
 import Player.Player;
@@ -25,11 +27,9 @@ import Exceptions.PlayerExistsException;
 import Exceptions.NotEnoughMoneyException;
 import Exceptions.NotEnoughSharesException;
 import Exceptions.PlayerNotFoundException;
-import Exceptions.ShareNotFoundException;
 import Exceptions.WrongNumberException;
 import StockPrice.StockPriceProvider;
-import GameParameters.ConstantValues;
-import java.io.IOException;
+import HelpClasses.ConstantValues;
 
 /**
  * Implementierung des Interface AccountManager 
@@ -163,7 +163,7 @@ public class AccountManagerImpl implements AccountManager{
 //                    logger.fine("Anzahl von Aktie '"+shareName+"' um"+anzahl+" erhöht!");
                 }
                 getPlayer(playerName).getCashAccount().changeWert(-1*anzahl*share.getWert());
-                getPlayer(playerName).getTransactions().add(new Transaction(share, anzahl, "Buy"));
+                getPlayer(playerName).getTransactions().add(new Transaction(share, anzahl, "Bought"));
                 if(getPlayer(playerName).getTransactions().size() > ConstantValues.MAXTRANSACTIONS){
                     getPlayer(playerName).getTransactions().remove(0);
                 }
@@ -207,7 +207,7 @@ public class AccountManagerImpl implements AccountManager{
 //                    logger.fine("Anzahl der Aktien "+shareName+" um "+anzahl+" verringert!");
                 }
                 getPlayer(playerName).getCashAccount().changeWert(anzahl*share.getWert());
-                getPlayer(playerName).getTransactions().add(new Transaction(share, anzahl, "Sell"));
+                getPlayer(playerName).getTransactions().add(new Transaction(share, anzahl, "Sold"));
                 if(getPlayer(playerName).getTransactions().size() > ConstantValues.MAXTRANSACTIONS){
                     getPlayer(playerName).getTransactions().remove(0);
                 }
@@ -299,13 +299,34 @@ public class AccountManagerImpl implements AccountManager{
      * Liefert die Transaktionen eines Spielers zurück
      * @param playerName
      * @param sortKey
+     * @param printType
      */
     @Override
-    public void getTransactions(String playerName, String sortKey) throws Exception{
-        Transaction.setSortKey(sortKey);
+    public void getTransactions(String playerName, String sortKey, String printType) throws Exception{
+        try{
+            Transaction.setSortKey(sortKey);
+        }catch(IllegalArgumentException e){
+            e.printStackTrace();
+        }
         Collections.sort(getPlayer(playerName).getTransactions());
-        for(Transaction t : getPlayer(playerName).getTransactions()){
-            System.out.println(t.toString());
+        if (printType.equals("plain")){
+            for(Transaction t : getPlayer(playerName).getTransactions()){
+                System.out.println(t.toString());
+            }
+        }else if (printType.equals("html")){
+            File transactions = new File("Ausgabe/Transactions_"+playerName+".html");
+            File folder = transactions.getParentFile();
+            if(!folder.exists() && !folder.mkdirs()){
+                throw new IllegalStateException("Ordner konnte nicht erstellt werden!");
+            }
+            FileWriter fileWriter = new FileWriter(transactions);
+            try (BufferedWriter writer = new BufferedWriter(fileWriter)) {
+                writer.write("<html>\n\t<head>\n\t\t<title>\n\t\t\tTransaktionen von "+playerName+"\n\t\t</title>\n\t</head>\n\t<body>\n");
+                for(Transaction t : getPlayer(playerName).getTransactions()){
+                    writer.write("\t\t\t"+t.toString()+"<br>\n");
+                }
+                writer.write("\t</body>\n</html>");
+            }
         }
     }
     
@@ -313,13 +334,33 @@ public class AccountManagerImpl implements AccountManager{
      * Liefert die Transaktionen eines Spielers zurück
      * @param playerName
      * @param shareName
-     * @return List<Transaction>
+     * @param printType
      */
     @Override
-    public void getTransactionsWithShare(String playerName, String shareName) throws Exception{
-        for(Transaction t : getPlayer(playerName).getTransactions()){
-            if(t.getShareName().equals(shareName)){
+    public void getTransactionsWithShare(String playerName, String shareName, String printType) throws Exception{
+        Transaction.setSortKey("t");
+        Collections.sort(getPlayer(playerName).getTransactions());
+        if (printType.equals("plain")){
+            for(Transaction t : getPlayer(playerName).getTransactions()){
+                if(t.getShareName().equals(shareName)){
                 System.out.println(t.toString());
+            }
+            }
+        }else if (printType.equals("html")){
+            File transactions = new File("Ausgabe/Transactions_"+playerName+".html");
+            File folder = transactions.getParentFile();
+            if(!folder.exists() && !folder.mkdirs()){
+                throw new IllegalStateException("Ordner konnte nicht erstellt werden!");
+            }
+            FileWriter fileWriter = new FileWriter(transactions);
+            try (BufferedWriter writer = new BufferedWriter(fileWriter)) {
+                writer.write("<html>\n\t<head>\n\t\t<title>\n\t\t\tTransaktionen von" +playerName+"\n\t\t</title>\n\t</head>\n\t<body>\n");
+                for(Transaction t : getPlayer(playerName).getTransactions()){
+                    if(t.getShareName().equals(shareName)){
+                        writer.write("\t\t\t"+t.toString()+"<br>\n");
+                    }
+                }
+                writer.write("\t</body>\n</html>");
             }
         }
     }

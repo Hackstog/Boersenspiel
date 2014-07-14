@@ -9,7 +9,7 @@
 package StockPrice;
 import java.util.Random;
 import Assets.Share;
-import GameParameters.ConstantValues;
+import HelpClasses.ConstantValues;
 
 /**
  * Zufälliger Kurs für eine Aktie

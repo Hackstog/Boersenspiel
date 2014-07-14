@@ -11,7 +11,7 @@ import AccountManager.AccountManager;
 import AccountManager.AccountManagerImpl;
 import Assets.ShareItem;
 import Assets.Share;
-import GameParameters.ConstantValues;
+import HelpClasses.ConstantValues;
 import Timer.StockTimer;
 import StockPrice.StockPriceProvider;
 import java.util.Random;
@@ -108,7 +108,9 @@ public class TradeAgent{
                 if(anzahl*now[i] < am.getValueOfCashAccount(player)){
                     am.buyShare(player, sharesAsArray[i].getName(), anzahl);
                     tendenz[i] = 0;
-                    kauf[i] = now[i];
+                    if(kauf[i]<now[i]){
+                        kauf[i] = now[i];
+                    }
                 }
             }
             /**

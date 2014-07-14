@@ -23,6 +23,7 @@
 
 package Launcher;
 import StockPrice.RandomStockPriceProvider;
+import StockPrice.HistoricalStockPriceProvider;
 import AccountManager.AccountManagerImpl;
 import Logging.AccountManagerProxy;
 import AccountManager.AccountManager;
@@ -41,7 +42,7 @@ import java.util.logging.Logger;
  */
 public class StockGameLauncher {
     public static void main (String[] args){
-        final RandomStockPriceProvider spp= new RandomStockPriceProvider();
+        final HistoricalStockPriceProvider spp= new HistoricalStockPriceProvider();
         //AccountManagerImpl direkt anlegen
         final AccountManagerImpl ami = new AccountManagerImpl(spp);
         //AccountManager über Proxy anlegen
