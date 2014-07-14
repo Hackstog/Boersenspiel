@@ -18,7 +18,8 @@ import java.util.List;
  */
 public interface AccountManager {
     public void createPlayer(String playerName, long startKapital) throws Exception;
-    public void createPlayer(String palyerName) throws Exception;
+    public void createPlayer(String playerName) throws Exception;
+    public void removePlayer(String playerName) throws Exception;
     public Share getShare(String shareName) throws Exception;
     public Player getPlayer(String playerName) throws Exception;
     public List<Player> getPlayer();

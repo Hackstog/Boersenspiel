@@ -32,6 +32,7 @@ import Viewer.PlayerViewer;
 import Viewer.AllViewer;
 import Exceptions.PlayerExistsException;
 import Command.StockGameCommandProcessor;
+import UI.StockGameUI;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -45,18 +46,19 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 /**
  * GameLauncher-Klasse mit main-Methode, die das Spiel startet
  */
-public class StockGameLauncher {
+public class StockGameLauncher extends Application{
     public static void main (String[] args) throws IOException{
         final HistoricalStockPriceProvider spp= new HistoricalStockPriceProvider();
         //AccountManagerImpl direkt anlegen
         final AccountManagerImpl ami = new AccountManagerImpl(spp);
         //AccountManager über Proxy anlegen
         final AccountManager am;
-        final AllViewer viewer;
         final StockGameCommandProcessor commandProcessor;
         
         Properties properties = new Properties();
@@ -75,16 +77,16 @@ public class StockGameLauncher {
         
         try {
             am = (AccountManager) AccountManagerProxy.newInstance(ami);
-//        final StockPriceViewer sviewer = new StockPriceViewer(spp);
-//        final PlayerViewer pviewer = new PlayerViewer(am);
-            viewer = new AllViewer(am, resourceBundle);
+//            final StockPriceViewer sviewer = new StockPriceViewer(spp);
+//            final PlayerViewer pviewer = new PlayerViewer(am);
+//            final AllViewer viewer = new AllViewer(am, resourceBundle);
             commandProcessor = new StockGameCommandProcessor(am);
             
-
+            
             spp.startUpdate();
-            //sviewer.start();
-            //pviewer.start();
-            viewer.start();  
+//            sviewer.start();
+//            pviewer.start();
+//            viewer.start();  
 
             try{
                 am.createPlayer("Daniel");
@@ -93,7 +95,7 @@ public class StockGameLauncher {
                 am.sellShare("Daniel", "Apple", 8);
                 am.createPlayer("Tim");
                 am.buyShare("Tim", "Siemens", 50);
-                commandProcessor.process();
+//                commandProcessor.process();
             }catch(Exception e){
                 e.printStackTrace(System.out);
             }
@@ -103,5 +105,16 @@ public class StockGameLauncher {
         }finally{
                 System.out.println();
         }
+        
+        /**
+         * Startet die GUI
+         */
+        Application.launch();
+    }
+    
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        StockGameUI stockGameUI = new StockGameUI();
+        stockGameUI.start(primaryStage);
     }
 }

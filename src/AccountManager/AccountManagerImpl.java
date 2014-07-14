@@ -2,7 +2,7 @@
  * AccountManagerImpl.java
  * Autor:     Daniel Heigl <daniel.heigl@hs-augsburg.de>
  * Datum:     29.05.2014
- * Version:   3.0
+ * Version:   3.1
  */
 
 
@@ -89,6 +89,17 @@ public class AccountManagerImpl implements AccountManager{
         }else{
             this.getPlayer().add(new Player(playerName));
         }
+    }
+    
+    /**
+     * Entfernt einen Spieler
+     * @param playerName
+     * @throws PlayerNotFoundException 
+     */
+    @Override
+    public void removePlayer(String playerName) throws Exception{
+        Player p = (Player) collectionObjectFinder.search(this.player, playerName, new PlayerNotFoundException());
+        this.getPlayer().remove(p);
     }
     
     /**
