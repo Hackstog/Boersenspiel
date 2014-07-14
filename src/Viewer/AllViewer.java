@@ -9,15 +9,20 @@
 package Viewer;
 import AccountManager.AccountManager;
 import Assets.Share;
+import Assets.ShareItem;
 import Player.Player;
 import StockPrice.StockPriceProvider;
 import Timer.StockTimer;
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Date;
+import java.util.ResourceBundle;
+import java.util.Locale;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
@@ -26,14 +31,7 @@ import javax.swing.JLabel;
  * Gemeinsames Ausgabefenster für Spieler und Aktien
  */
 public class AllViewer extends JFrame {
-    private static final long serialVersionUID = 1L;
-    private final AccountManager am;
-    private final StockPriceProvider stockPP;
-    private final StockTimer timer = StockTimer.getInstance();
-    private static final int TICK_PERIOD = 1000;
-    private final Timer ticker = timer.getTimer();
-    private final JLabel clockLabel;
-    
+ 
     private class TickerTask extends TimerTask {
         @Override
         public void run() {
@@ -50,11 +48,12 @@ public class AllViewer extends JFrame {
          * @return Ausgabe als String mit HTML-Tags
          */
         private String createText() {     
-            String output = "<html><body>Aktien:<br>"; 
+            DecimalFormat decimalFormat = new DecimalFormat("#.00", new DecimalFormatSymbols(Locale.getDefault()));	
+            String output = "<html><body>"+AllViewer.this.getResourceBundle().getString("Shares")+":<br>"; 
             for (Share share : stockPP.shares) {
-                output += share.toString()+", Aktueller Kurs: "+share.getWert()+"<br>";
+                output += share.toString()+", "+AllViewer.this.getResourceBundle().getString("ShareValue")+": "+decimalFormat.format((double) share.getWert()/100)+" "+AllViewer.this.getResourceBundle().getString("Currency")+"<br>";
             }
-            output += "<br><br><br>Spieler:<br>";
+            output += "<br><br><br>"+AllViewer.this.getResourceBundle().getString("Player")+":<br>";
             /**
              * Ausgabe Spieler + Konto + zeilenweise Aktien
              */
@@ -65,8 +64,9 @@ public class AllViewer extends JFrame {
             ListIterator<Player> iterator = am.getPlayer().listIterator();
             while(iterator.hasNext()){
                 Player p = iterator.next();
-                output += p.toString()+", Kontostand: "+(double) p.getCashAccount().getWert()/100+" €<br>";
+                output += p.toString()+", "+AllViewer.this.getResourceBundle().getString("CashAccountValue")+": "+decimalFormat.format((double) ((p.getCashAccount().getWert()/100)*(Double.parseDouble(AllViewer.this.getResourceBundle().getString("CurrencyExchangeValue")))))+" "+AllViewer.this.getResourceBundle().getString("Currency")+"<br>";
                 output += p.getDepositAccount().toString()+"<br><br>";
+                
             }
                       
             /**
@@ -74,19 +74,30 @@ public class AllViewer extends JFrame {
              */
             Calendar cal = Calendar.getInstance();
             Date date = cal.getTime();
-            DateFormat dateFormatter = DateFormat.getDateTimeInstance();
+            final DateFormat dateFormatter = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, Locale.getDefault());
             output += "<br>"+dateFormatter.format(date) + "</body></html>";
             return output;
         }
     }
+   
+    private static final long serialVersionUID = 1L;
+    private final AccountManager am;
+    private final StockPriceProvider stockPP;
+    private final StockTimer timer = StockTimer.getInstance();
+    private static final int TICK_PERIOD = 1000;
+    private final Timer ticker = timer.getTimer();
+    private final JLabel clockLabel;
+    private final ResourceBundle resourceBundle;
     
     /**
      * Definiert ein Viewerfenster
      * @param accountManager: AccountManager
+     * @param resourceBundle
      */
-    public AllViewer(AccountManager accountManager) {
+    public AllViewer(AccountManager accountManager, ResourceBundle resourceBundle) {
         this.am = accountManager;
         this.stockPP = accountManager.getStockPriceProvider();
+        this.resourceBundle = resourceBundle;
         clockLabel = new JLabel("loading ...");
         add("Center", clockLabel);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -99,5 +110,9 @@ public class AllViewer extends JFrame {
      */
     public void start() {
         ticker.scheduleAtFixedRate(new TickerTask(), 1000, TICK_PERIOD);
+    }
+    
+    public ResourceBundle getResourceBundle(){
+        return resourceBundle;
     }
 }

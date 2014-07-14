@@ -25,23 +25,32 @@ package Launcher;
 import StockPrice.RandomStockPriceProvider;
 import StockPrice.HistoricalStockPriceProvider;
 import AccountManager.AccountManagerImpl;
-import Logging.AccountManagerProxy;
+import AccountManager.AccountManagerProxy;
 import AccountManager.AccountManager;
 import Viewer.StockPriceViewer;
 import Viewer.PlayerViewer;
 import Viewer.AllViewer;
 import Exceptions.PlayerExistsException;
 import Command.StockGameCommandProcessor;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.ResourceBundle;
+import java.util.TimeZone;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * GameLauncher-Klasse mit main-Methode, die das Spiel startet
  */
 public class StockGameLauncher {
-    public static void main (String[] args){
+    public static void main (String[] args) throws IOException{
         final HistoricalStockPriceProvider spp= new HistoricalStockPriceProvider();
         //AccountManagerImpl direkt anlegen
         final AccountManagerImpl ami = new AccountManagerImpl(spp);
@@ -50,12 +59,25 @@ public class StockGameLauncher {
         final AllViewer viewer;
         final StockGameCommandProcessor commandProcessor;
         
+        Properties properties = new Properties();
+	InputStream inputStream = new FileInputStream("language.properties");
+	properties.load(inputStream);
+        Locale.setDefault(new Locale(properties.getProperty("user.language"),properties.getProperty("user.country")));
+	System.setProperty("user.country",properties.getProperty("user.country"));
+	System.out.println(Locale.getDefault());
+        
+        String language = new BufferedReader(new FileReader("language.properties")).readLine().split("=")[1];
+        
+	System.out.println(System.getProperty("user.country"));
+	ResourceBundle resourceBundle = ResourceBundle.getBundle(language, Locale.getDefault());
+	TimeZone.setDefault(null);
+	System.setProperty("user.timezone",resourceBundle.getString("user.timezone"));
         
         try {
             am = (AccountManager) AccountManagerProxy.newInstance(ami);
 //        final StockPriceViewer sviewer = new StockPriceViewer(spp);
 //        final PlayerViewer pviewer = new PlayerViewer(am);
-            viewer = new AllViewer(am);
+            viewer = new AllViewer(am, resourceBundle);
             commandProcessor = new StockGameCommandProcessor(am);
             
 

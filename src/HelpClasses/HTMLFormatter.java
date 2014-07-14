@@ -6,7 +6,7 @@
  */
 
 
-package Logging;
+package HelpClasses;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Formatter;

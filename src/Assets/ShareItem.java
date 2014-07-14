@@ -65,6 +65,6 @@ public class ShareItem extends Asset{
      */
     @Override
     public String toString(){
-        return anzahl+" Stück von Aktie "+shares.getName();
+        return anzahl+"x "+shares.getName();
     }
 }

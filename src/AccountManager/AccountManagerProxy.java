@@ -6,7 +6,8 @@
  */
 
 
-package Logging;
+package AccountManager;
+import HelpClasses.HTMLFormatter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.logging.FileHandler;
