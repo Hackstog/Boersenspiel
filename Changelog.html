@@ -152,33 +152,45 @@
         <h2>2014-07-10</h2>
         <ul>
             <li>Version 6.0</li>
-            <li>Arrays durch Collections ersetzt in <i>AccountManager</i>, <i>AccountManagerImpl</i>, <i>Share</i>, <i>CommandDescriptor</i>,
-                <i>CommandScanner</i>, <i>CommandTypeInfo</i>, <i>StockGameCommandType</i>, <i>StockGameCommandType</i>, <i>Player</i>, <i>TradeAgent</i>
-                <i>StockPriceInfo</i>, <i>StockPriceProvider</i>, <i>PlayerViewer</i> und <i>AllViewer</i>
-            </li>
+            <li>Arrays durch List und TreeSet ersetzt</li>
             <li>Klasse <i>CollectionObjectFinder</i> und Package <i>HelpClasses</i></li>
             <li>Klasse <i>Share</i> Comparable gemacht</li>  
         </ul>
+        
+        
         <h2>2014-07-13</h2>
         <ul>
             <li>Version 6.1</li> 
-            <li>Klasse <i>Transaction</i> zur Verwaltung der Transaktionen eines Spielers + Methoden zum Aufruf in <i>AccountManagerImpl</i> und <i>Player</i></li>
+            <li>Klasse <i>Transaction</i> zur Verwaltung der Transaktionen eines Spielers + Methoden zum Aufruf in <i>AccountManager</i> und <i>Player</i></li>
         </ul>
-        
-        
-        <!--         
-        <h2>2014-06-01</h2>
+        <ul>
+            <li>Version 6.1.1</li>
+            <li><i>ShareDepositAccount</i> umgestellt auf Collection-Liste</li>
+        </ul>
         <ul>
             <li>Version 7.0</li>
             <li>Build-File <i>Build.xml</i> erstellt mit folgenden Targets erstellt: Programm übersetzen (Ohne Tests), Tests übersetzen, JAR erstellen, Java-Doc generieren, Programm ausführen, Tests ausführen</li>
         </ul>
-        -->
+        <ul>
+            <li>Version 7.1</li>
+            <li>Lambda-Ausdrücke eingebaut</li>
+        </ul>
+        
+        
+        <h2>2014-07-14</h2>
+        <ul>
+            <li>Version 8.0</li>
+            <li>Transaktionen als Kommandozeilenausgabe sowie als HTML-Datei möglich</li>
+            <li>Klasse <i>HistoricalStockPriceProvider</i> sowie <i>CSVReader</i> zum einlesen von CSV-Dateien</li>
+        </ul>
+        
         
         <br /><br /><h2>To do:</h2>
         <ul class="todo">
             <li>TradeAgent: Kontostand sinkt mit der Zeit</li>
             <li>Logging: Rückgabetyp</li>
             <li>Build.xml: Jar zum laufen kriegen</li>
+            <li>Transactions-HTML als Tabelle</li>
         </ul>
     </body>
 </html>

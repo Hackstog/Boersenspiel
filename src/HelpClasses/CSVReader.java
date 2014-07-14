@@ -30,13 +30,13 @@ public class CSVReader {
     }
     
     public void run(){
-        BufferedReader reader = null;
+        BufferedReader reader;
         String line;
         try{
             reader = new BufferedReader(new FileReader(fileName));
             while((line = reader.readLine()) != null){
                 String[] daten = line.split("\\,");
-                if(daten[1].equals("Open")){
+                if(!(daten[1].equals("Open"))){
                     String daten1 = daten[1];
                     String[] number = daten1.split("\\.");
                     if(number.length > 1){
