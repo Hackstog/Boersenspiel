@@ -72,4 +72,8 @@ public class ShareDepositAccount extends Asset{
         }
         return result;
     }
+
+    public List<ShareItem> getPakete(){
+        return pakete;
+    }
 }

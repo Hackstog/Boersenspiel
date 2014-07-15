@@ -1,140 +1,56 @@
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getStockPriceProvider
-
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (StockPrice.StockPriceProvider) StockPrice.HistoricalStockPriceProvider@49097b5d
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Aufgerufene Methode: createPlayer
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Parameter: (java.lang.String) Daniel
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: R&uuml;ckgabewert: (void) null
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Aufgerufene Methode: buyShare
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Parameter: (java.lang.String) Daniel
 (java.lang.String) Apple
 (java.lang.Integer) 10
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: R&uuml;ckgabewert: (void) null
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Aufgerufene Methode: buyShare
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Parameter: (java.lang.String) Daniel
 (java.lang.String) Audi
 (java.lang.Integer) 20
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: R&uuml;ckgabewert: (void) null
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Aufgerufene Methode: sellShare
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Parameter: (java.lang.String) Daniel
 (java.lang.String) Apple
 (java.lang.Integer) 8
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: R&uuml;ckgabewert: (void) null
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Aufgerufene Methode: createPlayer
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Parameter: (java.lang.String) Tim
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: R&uuml;ckgabewert: (void) null
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Aufgerufene Methode: buyShare
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: Parameter: (java.lang.String) Tim
 (java.lang.String) Siemens
 (java.lang.Integer) 50
 
-Jul 14, 2014 1:08:51 PM Logging.AccountManagerProxy invoke
+Jul 15, 2014 7:47:40 AM AccountManager.AccountManagerProxy invoke
 INFORMATION: R&uuml;ckgabewert: (void) null
-Jul 14, 2014 1:08:52 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getPlayer
-
-Jul 14, 2014 1:08:52 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:08:52 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (java.util.List) [Daniel, Tim]
-Jul 14, 2014 1:08:53 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getPlayer
-
-Jul 14, 2014 1:08:53 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:08:53 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (java.util.List) [Daniel, Tim]
-Jul 14, 2014 1:08:54 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getPlayer
-
-Jul 14, 2014 1:08:54 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:08:54 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (java.util.List) [Daniel, Tim]
-Jul 14, 2014 1:08:55 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getPlayer
-
-Jul 14, 2014 1:08:55 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:08:55 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (java.util.List) [Daniel, Tim]
-Jul 14, 2014 1:08:56 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getPlayer
-
-Jul 14, 2014 1:08:56 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:08:56 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (java.util.List) [Daniel, Tim]
-Jul 14, 2014 1:08:57 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getPlayer
-
-Jul 14, 2014 1:08:57 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:08:57 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (java.util.List) [Daniel, Tim]
-Jul 14, 2014 1:08:58 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getPlayer
-
-Jul 14, 2014 1:08:58 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:08:58 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (java.util.List) [Daniel, Tim]
-Jul 14, 2014 1:08:59 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getPlayer
-
-Jul 14, 2014 1:08:59 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:08:59 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (java.util.List) [Daniel, Tim]
-Jul 14, 2014 1:09:00 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getPlayer
-
-Jul 14, 2014 1:09:00 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:09:00 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (java.util.List) [Daniel, Tim]
-Jul 14, 2014 1:09:01 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getPlayer
-
-Jul 14, 2014 1:09:01 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:09:01 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (java.util.List) [Daniel, Tim]
-Jul 14, 2014 1:09:02 PM Logging.AccountManagerProxy invoke
-INFORMATION: Aufgerufene Methode: getPlayer
-
-Jul 14, 2014 1:09:02 PM Logging.AccountManagerProxy invoke
-INFORMATION: Parameter: Keine Parameter!
-Jul 14, 2014 1:09:02 PM Logging.AccountManagerProxy invoke
-INFORMATION: R&uuml;ckgabewert: (java.util.List) [Daniel, Tim]

@@ -84,18 +84,14 @@ public class StockGameLauncher extends Application{
             
             
             spp.startUpdate();
+            
 //            sviewer.start();
 //            pviewer.start();
 //            viewer.start();  
 
             try{
-                am.createPlayer("Daniel");
-                am.buyShare("Daniel", "Apple", 10);
-                am.buyShare("Daniel", "Audi", 20);
-                am.sellShare("Daniel", "Apple", 8);
-                am.createPlayer("Tim");
-                am.buyShare("Tim", "Siemens", 50);
-//                commandProcessor.process();
+//              commandProcessor.process();
+                Application.launch();
             }catch(Exception e){
                 e.printStackTrace(System.out);
             }
@@ -105,11 +101,6 @@ public class StockGameLauncher extends Application{
         }finally{
                 System.out.println();
         }
-        
-        /**
-         * Startet die GUI
-         */
-        Application.launch();
     }
     
     @Override
