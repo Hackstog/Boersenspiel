@@ -102,9 +102,9 @@ public class TradeAgent{
              * Gleichzeitig Wert im Kauf Array speichern
              * Der zu erreichende Wert wird in der Klasse ConstantValues festgelegt
              */
-            if(tendenz[i]>=ConstantValues.BUYWHEN){
+            if(tendenz[i]>=ConstantValues.getBuyWhen()){
                 Random rand = new Random();
-                int anzahl = rand.nextInt(ConstantValues.BUYMAX+1);
+                int anzahl = rand.nextInt(ConstantValues.getBuyMax()+1);
                 if(anzahl*now[i] < am.getValueOfCashAccount(player)){
                     am.buyShare(player, sharesAsArray[i].getName(), anzahl);
                     tendenz[i] = 0;
@@ -117,7 +117,7 @@ public class TradeAgent{
              * Wenn der Kurs mehr als einen bestimmten Wert höher als der Einkaufspreis liegt alle Aktien verkaufen
              * Der konkrete Wert wird in der Klasse ConstantValues festgelegt
              */
-            if(now[i]>kauf[i]+ConstantValues.SELLDIFF){
+            if(now[i]>kauf[i]+ConstantValues.getSellDiff()){
                 /**
                  * Ermittelt den Namen der zu verkaufenden Aktie
                  * Prüft ob die Aktie im Depot liegt
@@ -127,7 +127,7 @@ public class TradeAgent{
                 String shareName = sharesAsArray[i].getName();
                 ShareItem paket = am.getPlayer(player).getDepositAccount().search(shareName);
                 if(paket!=null){
-                    int anzahl = ConstantValues.SELLPERC/100 * paket.getAnzahl();
+                    int anzahl = ConstantValues.getSellPerc()/100 * paket.getAnzahl();
                     am.sellShare(player, shareName, anzahl);
                     kauf[i]=Long.MAX_VALUE-1000;
                 }

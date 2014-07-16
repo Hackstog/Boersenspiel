@@ -33,6 +33,8 @@ public class HistoricalStockPriceProvider extends StockPriceProvider{
         csvList.get(5).run();
         csvList.add(new CSVReader("HistoricalValues/VW.csv", "VW"));
         csvList.get(6).run();
+        csvList.add(new CSVReader("HistoricalValues/Intel.csv", "Intel"));
+        csvList.get(7).run();
     }
     
     /**

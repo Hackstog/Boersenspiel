@@ -74,6 +74,7 @@ public class StockGameLauncher extends Application{
 	ResourceBundle resourceBundle = ResourceBundle.getBundle(language, Locale.getDefault());
 	TimeZone.setDefault(null);
 	System.setProperty("user.timezone",resourceBundle.getString("user.timezone"));
+        Application.launch();
         
         try {
             am = (AccountManager) AccountManagerProxy.newInstance(ami);
@@ -81,21 +82,10 @@ public class StockGameLauncher extends Application{
 //            final PlayerViewer pviewer = new PlayerViewer(am);
 //            final AllViewer viewer = new AllViewer(am, resourceBundle);
             commandProcessor = new StockGameCommandProcessor(am);
-            
-            
-            spp.startUpdate();
-            
 //            sviewer.start();
 //            pviewer.start();
 //            viewer.start();  
-
-            try{
-//              commandProcessor.process();
-                Application.launch();
-            }catch(Exception e){
-                e.printStackTrace(System.out);
-            }
-
+//            commandProcessor.process();
         } catch (IOException | SecurityException ex) {
             Logger.getLogger(StockGameLauncher.class.getName()).log(Level.SEVERE, null, ex);
         }finally{

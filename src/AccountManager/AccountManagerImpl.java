@@ -175,7 +175,7 @@ public class AccountManagerImpl implements AccountManager{
                 }
                 getPlayer(playerName).getCashAccount().changeWert(-1*anzahl*share.getWert());
                 getPlayer(playerName).getTransactions().add(new Transaction(share, anzahl, "Bought"));
-                if(getPlayer(playerName).getTransactions().size() > ConstantValues.MAXTRANSACTIONS){
+                if(getPlayer(playerName).getTransactions().size() > ConstantValues.getMaxTransactions()){
                     getPlayer(playerName).getTransactions().remove(0);
                 }
             }
@@ -219,7 +219,7 @@ public class AccountManagerImpl implements AccountManager{
                 }
                 getPlayer(playerName).getCashAccount().changeWert(anzahl*share.getWert());
                 getPlayer(playerName).getTransactions().add(new Transaction(share, anzahl, "Sold"));
-                if(getPlayer(playerName).getTransactions().size() > ConstantValues.MAXTRANSACTIONS){
+                if(getPlayer(playerName).getTransactions().size() > ConstantValues.getMaxTransactions()){
                     getPlayer(playerName).getTransactions().remove(0);
                 }
             }

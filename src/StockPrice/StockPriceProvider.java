@@ -33,13 +33,14 @@ abstract public class StockPriceProvider implements StockPriceInfo{
 
     public StockPriceProvider() {
         this.shares = new TreeSet<>();
-        shares.add(new Share("Audi",300));
-        shares.add(new Share("VW", 230));
-        shares.add(new Share("BMW", 180));
-        shares.add(new Share("Apple", 400));
-        shares.add(new Share("Siemens", 210));
-        shares.add(new Share("Google", 370));
-        shares.add(new Share("Microsoft", 150));
+        shares.add(new Share("Audi",0));
+        shares.add(new Share("VW", 0));
+        shares.add(new Share("BMW", 0));
+        shares.add(new Share("Apple", 0));
+        shares.add(new Share("Siemens", 0));
+        shares.add(new Share("Google", 0));
+        shares.add(new Share("Microsoft", 0));
+        shares.add(new Share("Intel", 0));
         for (Share s : shares){
             shareMap.put(s.getName(), s.getWert());
         }
@@ -81,6 +82,10 @@ abstract public class StockPriceProvider implements StockPriceInfo{
     public void updateShareRates(){
         shares.stream().forEach((share) -> {
             updateShareRate(share);
+            share.getLastRates().add(share.getWert());
+            if(share.getLastRates().size() > 21){
+                share.getLastRates().remove(0);
+            }
         });
     }
     

@@ -23,7 +23,7 @@ public class RandomStockPriceProvider extends StockPriceProvider{
     @Override
     public void updateShareRate(Share share){
         Random rand = new Random();
-        long diff = rand.nextInt(ConstantValues.MAXSTOCKCHANGE+1);
+        long diff = rand.nextInt(ConstantValues.getMaxStockChange()+1);
         long vorzeichen = rand.nextInt(3);
         //Zum Teste des TradeAgent: Kurse sinken nur
         //vorzeichen = 2;

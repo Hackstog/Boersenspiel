@@ -2,15 +2,20 @@
  * Share.java
  * Autor:     Daniel Heigl <daniel.heigl@hs-augsburg.de>
  * Datum:     29.05.2014
- * Version:   2.1
+ * Version:   2.2
  */
 
 
 package Assets;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Aktie
  */
 public class Share extends Asset implements Comparable<Share>{
+    private List<Long> lastRates = new ArrayList<>();
+    
     /**
      * Legt ein neues Share-Objekt mit den als Parameter angegebenen Namen und Kurs an
      * @param name: Name der Aktie als String
@@ -75,5 +80,13 @@ public class Share extends Asset implements Comparable<Share>{
     @Override
     public int compareTo (Share share){
         return name.compareTo(share.getName());
+    }
+    
+    /**
+     * Liefert die Liste der letzten Aktienpreise zurück
+     * @return 
+     */
+    public List<Long> getLastRates(){
+        return lastRates;
     }
 }

@@ -45,7 +45,7 @@ public class Player {
     public Player(String name){
         this.name = name;
         this.aktienDepot = new ShareDepositAccount();
-        this.konto = new CashAccount(ConstantValues.STARTKAPITAL);
+        this.konto = new CashAccount(ConstantValues.getStartKapital());
     }
     
     /**
