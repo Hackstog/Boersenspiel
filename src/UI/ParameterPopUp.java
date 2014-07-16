@@ -153,7 +153,7 @@ public class ParameterPopUp extends Application{
         secondaryStage.setScene(scene);
         
         ok.setOnAction((ActionEvent t) -> {
-            ConstantValues.setStartKapital((int) sliderKapital.getValue()*100);
+            ConstantValues.setStartKapital((int) (sliderKapital.getValue()*100));
             ConstantValues.setMaxTransactions((int) sliderTrans.getValue());
             ConstantValues.setMaxStockChange((int) sliderStockChange.getValue());
             ConstantValues.setBuyMax((int) sliderBuyMax.getValue());

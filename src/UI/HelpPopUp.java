@@ -27,7 +27,6 @@ public class HelpPopUp extends Application{
     
     @Override
     public void start(Stage secondaryStage){
-        secondaryStage.setTitle(StockGameUI.rb.getString("MenuItem_createPlayer"));
         secondaryStage.setTitle(StockGameUI.rb.getString("MenuItem_help"));
         gridPane.setVgap(10);
         gridPane.setHgap(50);
@@ -37,7 +36,6 @@ public class HelpPopUp extends Application{
         Font h2 = new Font(16);
         Font h3 = new Font(14);
         Button ok = new Button(StockGameUI.rb.getString("Button_ok"));
-        ok.setAlignment(Pos.BOTTOM_CENTER);
 
         if((StockGameUI.rb.getString("Help_notDefinedYet").equals("No"))){
             Text stockGame = new Text(StockGameUI.rb.getString("WindowTitle"));
@@ -128,7 +126,7 @@ public class HelpPopUp extends Application{
         ok.setOnAction((ActionEvent t) -> {
             secondaryStage.close();
         });
-
+        
         secondaryStage.setScene(scene);
     }
 }

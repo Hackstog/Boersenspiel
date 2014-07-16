@@ -41,51 +41,31 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.event.ActionEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
-
+import javafx.stage.WindowEvent;
 
 public class StockGameUI extends Application{
-    private static StockPriceProvider spp;
-    static AccountManagerImpl am;
+    private static StockPriceProvider spp = new HistoricalStockPriceProvider();
+    static AccountManagerImpl am = new AccountManagerImpl(spp);
     static Timer timer = new java.util.Timer();
     private static List<ShareItem> sharesOfPlayer = new ArrayList<>();
     static ResourceBundle rb = ResourceBundle.getBundle("de", Locale.getDefault());
     static DecimalFormat decimalFormat = new DecimalFormat("0.00", new DecimalFormatSymbols(Locale.getDefault()));	
 
     public StockGameUI(){
-        this.spp = new HistoricalStockPriceProvider();
-        this.am = new AccountManagerImpl(spp);
         spp.startUpdate();
-        
-//        am.createPlayer("Tim");
-//        am.createPlayer("Daniel");
-//        try{
-//            am.buyShare("Daniel", "Audi", 10);
-//            am.buyShare("Daniel", "Apple", 30);
-//            am.buyShare("Daniel", "Google", 5);
-//            am.buyShare("Daniel", "Siemens", 15);
-//            am.buyShare("Daniel", "Microsoft", 10);
-//            am.buyShare("Daniel", "VW", 40);
-//            am.buyShare("Daniel", "BMW", 50);
-//            am.buyShare("Tim", "Microsoft", 24);
-//            am.buyShare("Tim", "BMW", 50);
-//        }catch(Exception e){
-//        }
     }
     
     /**
@@ -93,53 +73,54 @@ public class StockGameUI extends Application{
      */
     private final Scene scene = new Scene(new VBox(), 800, 600);
     private final Scene popup = new Scene(new VBox(), 300, 200);
-    private final BorderPane borderPane = new BorderPane();
-    private final GridPane gridPane = new GridPane();
-    private final GridPane buttonPane = new GridPane();
-    private static final GridPane graphPane = new GridPane();
-    private static final GridPane leftPane = new GridPane();
-    private static GridPane buySellPane = new GridPane();
-    private final GridPane rightPane = new GridPane();
     private final Stage stage = new Stage();
     private final Stage secondaryStage = new Stage();
+    private static final BorderPane borderPane = new BorderPane();
+    private static final GridPane gridPane = new GridPane();
+    private static final GridPane rightPane = new GridPane();
+    private static final GridPane buttonPane = new GridPane();
+    private static final GridPane buySellPane = new GridPane();
+    private static final GridPane leftPane = new GridPane();
+    private static final GridPane graphPane = new GridPane();
+    static ScrollPane shareList = new ScrollPane();
     private final MenuBar menuBar = new MenuBar();
-    private final List<RadioButton> radioButtons = new ArrayList<>();
-    private final ComboBox playerDropDown = new ComboBox();
-    private final ComboBox shareDropDown = new ComboBox();
-    private static ObservableList<Player> playerDropDownData = FXCollections.observableArrayList();
-    private static ObservableList<String> shareDropDownData = FXCollections.observableArrayList();
     private final Menu menuStockGame = new Menu(rb.getString("WindowTitle"));
-    private final MenuItem exit = new MenuItem(rb.getString("MenuItem_exit"));
     private final Menu menuPlayer = new Menu(rb.getString("MenuPlayer"));
-    private final MenuItem createPlayer = new MenuItem(rb.getString("MenuItem_createPlayer"));
-    private final MenuItem deletePlayer = new MenuItem(rb.getString("MenuItem_deletePlayer"));  
     private final Menu menuSettings = new Menu(rb.getString("MenuSettings"));
     private final Menu language = new Menu(rb.getString("MenuItem_language"));
-    private final ToggleGroup languages = new ToggleGroup();
-    RadioMenuItem lang_de = new RadioMenuItem("Deutsch");
-    RadioMenuItem lang_en = new RadioMenuItem("Englisch");
-    RadioMenuItem lang_it = new RadioMenuItem("Italiano");
-    RadioMenuItem lang_fr = new RadioMenuItem("Français");
     private final Menu provider = new Menu(rb.getString("MenuItem_provider"));
-    private final ToggleGroup providers = new ToggleGroup();
-    private static ToggleGroup shares = new ToggleGroup();
-    RadioMenuItem provider_random = new RadioMenuItem(rb.getString("Provider_random"));
-    RadioMenuItem provider_historical = new RadioMenuItem(rb.getString("Provider_historical"));
-    private final MenuItem parameter = new MenuItem(rb.getString("MenuItem_parameter"));
     private final Menu menuHelp = new Menu("?");
+    private final MenuItem exit = new MenuItem(rb.getString("MenuItem_exit"));
+    private final MenuItem createPlayer = new MenuItem(rb.getString("MenuItem_createPlayer"));
+    private final MenuItem deletePlayer = new MenuItem(rb.getString("MenuItem_deletePlayer"));
+    private final MenuItem parameter = new MenuItem(rb.getString("MenuItem_parameter"));    
     private final MenuItem help = new MenuItem(rb.getString("MenuItem_help"));
     private final MenuItem about = new MenuItem(rb.getString("MenuItem_about"));
-    Button buy = new Button();
-    Button sell = new Button();
-    Button getTrans = new Button();
-    Button agent = new Button();
-    Button buyOk = new Button(rb.getString("Button_buy"));
-    Button abbort = new Button(rb.getString("Button_abbort"));
-    Button sellOk = new Button(rb.getString("Button_sell"));
+    private final ToggleGroup languages = new ToggleGroup();
+    private final ToggleGroup providers = new ToggleGroup();
+    private static final ToggleGroup shares = new ToggleGroup();
+    private final RadioMenuItem lang_de = new RadioMenuItem("Deutsch");
+    private final RadioMenuItem lang_en = new RadioMenuItem("Englisch");
+    private final RadioMenuItem lang_it = new RadioMenuItem("Italiano");
+    private final RadioMenuItem lang_fr = new RadioMenuItem("Français");
+    private final RadioMenuItem provider_random = new RadioMenuItem(rb.getString("Provider_random"));
+    private final RadioMenuItem provider_historical = new RadioMenuItem(rb.getString("Provider_historical"));
+    private final List<RadioButton> shareButtons = new ArrayList<>();
+    private static final ObservableList<Player> playerDropDownData = FXCollections.observableArrayList();
+    private static final ObservableList<String> shareDropDownData = FXCollections.observableArrayList();
+    private final ComboBox playerDropDown = new ComboBox();
+    private final ComboBox shareDropDown = new ComboBox();    
+    private final Button buy = new Button();
+    private final Button sell = new Button();
+    private final Button getTrans = new Button();
+    private final Button agent = new Button();
+    private final Button buyOk = new Button(rb.getString("Button_buy"));
+    private final Button abbort = new Button(rb.getString("Button_abbort"));
+    private final Button sellOk = new Button(rb.getString("Button_sell"));
     final static Label playerNameLabel = new Label();
     final static Label playerCashValue = new Label();
-    final static Label status = new Label("Test");
-    final Label shares_head = new Label (rb.getString("Shares"));
+    final static Label status = new Label();
+    final static Label shares_head = new Label (rb.getString("Shares"));
     final static Label choosenShare = new Label();
     final static NumberAxis xAxis = new NumberAxis("", 0d, 20d, 1);
     final static NumberAxis yAxis = new NumberAxis("", 0d, 1000, 50);
@@ -147,7 +128,7 @@ public class StockGameUI extends Application{
     static String selectedShareToTrade;
     static int selectedBuyAmount;
     static TextField number = new TextField();
-    static ScrollPane shareList = new ScrollPane();
+
     
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -337,7 +318,8 @@ public class StockGameUI extends Application{
         //About-Popup
         about.setOnAction((ActionEvent t) -> {
             AboutPopUp about = new AboutPopUp();
-            about.get().show();
+            about.start(secondaryStage);
+            secondaryStage.show();
         });
         
         //Help-Popup
@@ -474,6 +456,14 @@ public class StockGameUI extends Application{
         abbort.setOnAction((ActionEvent t) -> {
             buySellPane.getChildren().clear();
         });
+        
+        //Programm beenden, wenn Fenster geschlossen wird
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
     }
     
     
@@ -533,7 +523,7 @@ public class StockGameUI extends Application{
     }
     
     public static void listSharesOfPlayer(Player p){
-        String value = decimalFormat.format(((double) (p.getCashAccount().getWert()/100))*Double.valueOf(rb.getString("CurrencyExchangeValue")));
+        String value = decimalFormat.format(((double) (p.getCashAccount().getWert()/100)));
         playerCashValue.setText(rb.getString("CashAccountValue")+" "+value+" "+rb.getString("Currency"));
         sharesOfPlayer = p.getDepositAccount().getPakete();
         GridPane list = new GridPane();
