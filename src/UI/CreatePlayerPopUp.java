@@ -43,6 +43,7 @@ public class CreatePlayerPopUp extends Application{
         gridPane.add(input, 1, 2);
         
         Button ok = new Button(StockGameUI.rb.getString("Button_ok"));
+        ok.setDefaultButton(true);
         Button abbort = new Button(StockGameUI.rb.getString("Button_abbort"));
         buttonPane.add(ok, 1, 1);
         buttonPane.add(abbort, 2, 1);

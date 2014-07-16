@@ -36,6 +36,7 @@ public class HelpPopUp extends Application{
         Font h2 = new Font(16);
         Font h3 = new Font(14);
         Button ok = new Button(StockGameUI.rb.getString("Button_ok"));
+        ok.setDefaultButton(true);
 
         if((StockGameUI.rb.getString("Help_notDefinedYet").equals("No"))){
             Text stockGame = new Text(StockGameUI.rb.getString("WindowTitle"));
