@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.application.Application;
+import javafx.scene.paint.Color;
 
 public class CreatePlayerPopUp extends Application{
     private final Scene scene = new Scene(new VBox(), 300, 200);
@@ -58,8 +59,11 @@ public class CreatePlayerPopUp extends Application{
             try {
                 String s = input.getText();
                 StockGameUI.am.createPlayer(s);
+                StockGameUI.status.setTextFill(Color.web("green"));
+                StockGameUI.status.setText(StockGameUI.rb.getString("Status_createPlayerSuccess"));
             } catch (Exception ex) {
-                Logger.getLogger(CreatePlayerPopUp.class.getName()).log(Level.SEVERE, null, ex);
+                StockGameUI.status.setTextFill(Color.web("red"));
+                StockGameUI.status.setText(StockGameUI.rb.getString("Status_createPlayerError"));
             }
             StockGameUI.listPlayer();
             secondaryStage.close();

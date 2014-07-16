@@ -33,7 +33,7 @@ abstract public class StockPriceProvider implements StockPriceInfo{
 
     public StockPriceProvider() {
         this.shares = new TreeSet<>();
-        shares.add(new Share("Audi",0));
+        shares.add(new Share("Audi", 0));
         shares.add(new Share("VW", 0));
         shares.add(new Share("BMW", 0));
         shares.add(new Share("Apple", 0));

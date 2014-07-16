@@ -2,27 +2,32 @@
  * HelpPopUp.java
  * Autor:   Daniel Heigl <daniel.heigl@hs-augsburg.de>
  * Datum:   14.07.2014
- * Version: 1.0
+ * Version: 2.0
  */
 
 
 package UI;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import javafx.application.Application;
+import javafx.geometry.Pos;
 
-public class HelpPopUp{
+public class HelpPopUp extends Application{
     private final Scene scene = new Scene(new VBox(), 800, 600);
     private final GridPane gridPane = new GridPane();
     private final ScrollPane scrollPane = new ScrollPane();
     private final Stage stage = new Stage();
     
-    public Stage get(){
-        Stage secondaryStage = new Stage();
+    @Override
+    public void start(Stage secondaryStage){
+        secondaryStage.setTitle(StockGameUI.rb.getString("MenuItem_createPlayer"));
         secondaryStage.setTitle(StockGameUI.rb.getString("MenuItem_help"));
         gridPane.setVgap(10);
         gridPane.setHgap(50);
@@ -31,6 +36,8 @@ public class HelpPopUp{
         title.setFont(new Font(24));
         Font h2 = new Font(16);
         Font h3 = new Font(14);
+        Button ok = new Button(StockGameUI.rb.getString("Button_ok"));
+        ok.setAlignment(Pos.BOTTOM_CENTER);
 
         if((StockGameUI.rb.getString("Help_notDefinedYet").equals("No"))){
             Text stockGame = new Text(StockGameUI.rb.getString("WindowTitle"));
@@ -77,7 +84,8 @@ public class HelpPopUp{
             Text button_agent = new Text(StockGameUI.rb.getString("Button_agent"));
             button_agent.setFont(h2);
             Text button_agentText = new Text(StockGameUI.rb.getString("Help_buttonAgent"));
-
+            
+            
             gridPane.add(title, 1, 1);
             gridPane.add(stockGame, 1, 3);
             gridPane.add(stockGame_exit, 1, 4);
@@ -108,15 +116,19 @@ public class HelpPopUp{
             gridPane.add(button_agent, 1, 36);
             gridPane.add(button_agentText, 1, 37);
             scrollPane.setContent(gridPane);
+            gridPane.add(ok, 1, 39);
             ((VBox) scene.getRoot()).getChildren().add(scrollPane);
         }else{
             Text noHelp = new Text(StockGameUI.rb.getString("Help_notDefinedYet"));
             gridPane.add(noHelp, 1, 1);
+            gridPane.add(ok, 1, 2);
             ((VBox) scene.getRoot()).getChildren().add(gridPane);
         }
         
+        ok.setOnAction((ActionEvent t) -> {
+            secondaryStage.close();
+        });
 
         secondaryStage.setScene(scene);
-        return secondaryStage;
     }
 }

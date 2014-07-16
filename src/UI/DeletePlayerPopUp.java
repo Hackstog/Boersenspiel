@@ -24,6 +24,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import javafx.scene.paint.Color;
 
 public class DeletePlayerPopUp extends Application{
     private AccountManager am;
@@ -70,14 +71,16 @@ public class DeletePlayerPopUp extends Application{
         
         ok.setOnAction((ActionEvent t) -> {
             try {
-                if(playerName != null){
-                    StockGameUI.am.removePlayer(playerName);
-                    StockGameUI.listPlayer();
-                    secondaryStage.close();
-                }
+                StockGameUI.am.removePlayer(playerName);
+                StockGameUI.listPlayer();
+                StockGameUI.status.setTextFill(Color.web("green"));
+                StockGameUI.status.setText(StockGameUI.rb.getString("Status_deletePlayerSuccess"));
+                secondaryStage.close();
             } catch (Exception ex) {
-                Logger.getLogger(CreatePlayerPopUp.class.getName()).log(Level.SEVERE, null, ex);
+                StockGameUI.status.setTextFill(Color.web("red"));
+                StockGameUI.status.setText(StockGameUI.rb.getString("Status_deletePlayerError"));
             }
+            StockGameUI.listPlayer();
         });
                 
 

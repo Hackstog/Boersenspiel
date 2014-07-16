@@ -35,6 +35,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.BorderPane;
@@ -46,6 +47,7 @@ import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.event.ActionEvent;
 import java.util.logging.Level;
@@ -61,7 +63,7 @@ public class StockGameUI extends Application{
     private static StockPriceProvider spp;
     static AccountManagerImpl am;
     static Timer timer = new java.util.Timer();
-    private List<ShareItem> sharesOfPlayer = new ArrayList<>();
+    private static List<ShareItem> sharesOfPlayer = new ArrayList<>();
     static ResourceBundle rb = ResourceBundle.getBundle("de", Locale.getDefault());
     static DecimalFormat decimalFormat = new DecimalFormat("0.00", new DecimalFormatSymbols(Locale.getDefault()));	
 
@@ -70,21 +72,20 @@ public class StockGameUI extends Application{
         this.am = new AccountManagerImpl(spp);
         spp.startUpdate();
         
-        am.createPlayer("Tim");
-        am.createPlayer("Daniel");
-        try{
-            am.buyShare("Daniel", "Audi", 10);
-            am.buyShare("Daniel", "Apple", 30);
-            am.buyShare("Daniel", "Google", 5);
-            am.buyShare("Daniel", "Siemens", 15);
-            am.buyShare("Daniel", "Microsoft", 10);
-            am.buyShare("Daniel", "VW", 40);
-            am.buyShare("Daniel", "BMW", 50);
-            am.buyShare("Tim", "Microsoft", 24);
-            am.buyShare("Tim", "BMW", 50);
-        }catch(Exception e){
-        }
-        
+//        am.createPlayer("Tim");
+//        am.createPlayer("Daniel");
+//        try{
+//            am.buyShare("Daniel", "Audi", 10);
+//            am.buyShare("Daniel", "Apple", 30);
+//            am.buyShare("Daniel", "Google", 5);
+//            am.buyShare("Daniel", "Siemens", 15);
+//            am.buyShare("Daniel", "Microsoft", 10);
+//            am.buyShare("Daniel", "VW", 40);
+//            am.buyShare("Daniel", "BMW", 50);
+//            am.buyShare("Tim", "Microsoft", 24);
+//            am.buyShare("Tim", "BMW", 50);
+//        }catch(Exception e){
+//        }
     }
     
     /**
@@ -97,13 +98,16 @@ public class StockGameUI extends Application{
     private final GridPane buttonPane = new GridPane();
     private static final GridPane graphPane = new GridPane();
     private static final GridPane leftPane = new GridPane();
+    private static GridPane buySellPane = new GridPane();
     private final GridPane rightPane = new GridPane();
     private final Stage stage = new Stage();
     private final Stage secondaryStage = new Stage();
     private final MenuBar menuBar = new MenuBar();
     private final List<RadioButton> radioButtons = new ArrayList<>();
     private final ComboBox playerDropDown = new ComboBox();
+    private final ComboBox shareDropDown = new ComboBox();
     private static ObservableList<Player> playerDropDownData = FXCollections.observableArrayList();
+    private static ObservableList<String> shareDropDownData = FXCollections.observableArrayList();
     private final Menu menuStockGame = new Menu(rb.getString("WindowTitle"));
     private final MenuItem exit = new MenuItem(rb.getString("MenuItem_exit"));
     private final Menu menuPlayer = new Menu(rb.getString("MenuPlayer"));
@@ -129,14 +133,21 @@ public class StockGameUI extends Application{
     Button sell = new Button();
     Button getTrans = new Button();
     Button agent = new Button();
-    final Label playerNameLabel = new Label();
-    final Label playerCashValue = new Label();
+    Button buyOk = new Button(rb.getString("Button_buy"));
+    Button abbort = new Button(rb.getString("Button_abbort"));
+    Button sellOk = new Button(rb.getString("Button_sell"));
+    final static Label playerNameLabel = new Label();
+    final static Label playerCashValue = new Label();
+    final static Label status = new Label("Test");
     final Label shares_head = new Label (rb.getString("Shares"));
     final static Label choosenShare = new Label();
     final static NumberAxis xAxis = new NumberAxis("", 0d, 20d, 1);
-    final static NumberAxis yAxis = new NumberAxis("", 0d, 1000, 10);
+    final static NumberAxis yAxis = new NumberAxis("", 0d, 1000, 50);
     final static LineChart<Number,Number> chart = new LineChart<>(xAxis,yAxis);
-
+    static String selectedShareToTrade;
+    static int selectedBuyAmount;
+    static TextField number = new TextField();
+    static ScrollPane shareList = new ScrollPane();
     
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -166,6 +177,7 @@ public class StockGameUI extends Application{
         menuHelp.getItems().add(about);
         menuBar.getMenus().addAll(menuStockGame, menuPlayer, menuSettings, menuHelp);
         
+        
         //Legt ein GridPane an
         gridPane.setVgap(10);
         gridPane.setHgap(20);
@@ -177,21 +189,25 @@ public class StockGameUI extends Application{
         buttonPane.setVgap(10);
         buttonPane.setHgap(10);
         buttonPane.setPadding(new Insets(0, 0, 0, 0));
+        buySellPane.setVgap(10);
+        buySellPane.setHgap(10);
+        buySellPane.setPadding(new Insets(0, 0, 0, 0));
         
-        //Liste der Aktien
+        
+        //Liste der Aktien + Graph
         listShares();
         updateShares();
-
         graphPane.add(chart, 1, 1);
+        
         
         //Aktienkurs als Graph
         xAxis.minHeight(250);
+        xAxis.setMinorTickVisible(false);
         chart.minWidth(100);
         chart.maxWidth(100);
         chart.minHeight(100);
         chart.maxHeight(100);
         chart.setLegendVisible(false);
-
         
         
         //Liste der Spieler als DropDown-Menü
@@ -202,7 +218,6 @@ public class StockGameUI extends Application{
         
         
         //Aktien des Spielers als Scrollbare Liste
-        ScrollPane shareList = new ScrollPane();
         shareList.setMinHeight(200);
         shareList.setMinWidth(400);
         playerNameLabel.setFont(new Font(16));
@@ -210,7 +225,6 @@ public class StockGameUI extends Application{
         rightPane.add(playerCashValue, 1, 3);
         rightPane.add(shareList, 1, 4);
  
-
 
         //Buttons für Aktionen
         buy.setText(rb.getString("Button_buy"));
@@ -226,12 +240,13 @@ public class StockGameUI extends Application{
         agent.setMaxWidth(Double.MAX_VALUE);
         buttonPane.add(agent, 2, 2);
         rightPane.add(buttonPane, 1, 5);
-
+        
+        
+        //Buy/Sell Bereich
+        rightPane.add(buySellPane, 1, 6);
+        
         //Statusleiste
-        HBox statusbar = new HBox();
-        Label status = new Label();
-        statusbar.getChildren().add(status);
-        statusbar.setMargin(status, new Insets(5, 5, 5, 25));
+        status.setPadding(new Insets(20, 0, 0, 20));
 
         
         gridPane.add(leftPane, 1, 1);
@@ -239,7 +254,7 @@ public class StockGameUI extends Application{
         borderPane.setTop(menuBar);
         borderPane.setCenter(rightPane);
         borderPane.setLeft(gridPane);
-        borderPane.setBottom(statusbar);
+        borderPane.setBottom(status);
         ((VBox) scene.getRoot()).getChildren().add(borderPane);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -255,22 +270,7 @@ public class StockGameUI extends Application{
             @Override
             public void changed(ObservableValue<? extends Player> ov, Player old, Player neu) {
                 playerNameLabel.setText(neu.toString());
-                String value = decimalFormat.format(((double) (neu.getCashAccount().getWert()/100))*Double.valueOf(rb.getString("CurrencyExchangeValue")));
-                playerCashValue.setText(rb.getString("CashAccountValue")+" "+value+" "+rb.getString("Currency"));
-                sharesOfPlayer = neu.getDepositAccount().getPakete();
-                GridPane list = new GridPane();
-                list.setHgap(5);
-                list.setVgap(5);
-                int j = 1;
-                for(ShareItem paket : sharesOfPlayer){
-                    Text name = new Text(paket.getName());
-                    Text anzahl = new Text(String.valueOf(paket.getAnzahl()));
-                    list.add(name, 1, j);
-                    list.add(anzahl, 20, j);
-                    j++;
-                }
-                status.setText("");
-                shareList.setContent(list);
+                listSharesOfPlayer(neu);
             }
         });
         
@@ -278,25 +278,21 @@ public class StockGameUI extends Application{
         /**
          * Ausgewählte Aktie ermittelnt und Graph erzeugen
          */
-        shares.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> ov, Toggle old, Toggle neu) {
-                RadioButton r = (RadioButton) neu.getToggleGroup().getSelectedToggle();
-                choosenShare.setText(r.getText());
-                try {
-                    Share s = spp.getShare(r.getText());
-                    List<Long> graphEntries = s.getLastRates();
-                    
-                    XYChart.Series series = new XYChart.Series();
-                    int j = 0;
-                    for(long l : graphEntries){
-                        series.getData().add(new XYChart.Data(j, l/100));
-                        j++;
-                    }
-                    chart.getData().clear();
-                    chart.getData().add(series);
-                } catch (Exception ex) {
+        shares.selectedToggleProperty().addListener((ObservableValue<? extends Toggle> ov, Toggle old, Toggle neu) -> {
+            RadioButton r = (RadioButton) neu.getToggleGroup().getSelectedToggle();
+            choosenShare.setText(r.getText());
+            try {
+                Share s = spp.getShare(r.getText());
+                List<Long> graphEntries = s.getLastRates();
+                XYChart.Series series = new XYChart.Series();
+                int j = 0;
+                for(long l : graphEntries){
+                    series.getData().add(new XYChart.Data(j, l/100));
+                    j++;
                 }
+                chart.getData().clear();
+                chart.getData().add(series);
+            } catch (Exception ex) {
             }
         });
         
@@ -309,10 +305,12 @@ public class StockGameUI extends Application{
         //Spracheinstellung
         lang_de.setOnAction((ActionEvent t) -> {
             rb = ResourceBundle.getBundle("de", Locale.getDefault());
+            status.setText("Sprache umgestellt auf Deutsch");
             setLanguage();
         });
         lang_en.setOnAction((ActionEvent t) -> {
             rb = ResourceBundle.getBundle("en", Locale.getDefault());
+            status.setText("Language changed to englisch");
             setLanguage();
         });
         lang_it.setOnAction((ActionEvent t) -> {
@@ -327,9 +325,13 @@ public class StockGameUI extends Application{
         //Providereinstellung
         provider_historical.setOnAction((ActionEvent t) -> {
             StockGameUI.spp = new HistoricalStockPriceProvider();
+            spp.startUpdate();
+            status.setText(rb.getString("Status_providerHist"));
         });
         provider_random.setOnAction((ActionEvent t) -> {
            StockGameUI.spp = new RandomStockPriceProvider();
+           spp.startUpdate();
+           status.setText(rb.getString("Status_providerRand"));
         });
         
         //About-Popup
@@ -341,7 +343,8 @@ public class StockGameUI extends Application{
         //Help-Popup
         help.setOnAction((ActionEvent t) -> {
             HelpPopUp help = new HelpPopUp();
-            help.get().show();
+            help.start(secondaryStage);
+            secondaryStage.show();
         });
         
         //Player-Popup
@@ -370,10 +373,10 @@ public class StockGameUI extends Application{
                 try {
                     am.getTransactions(playerNameLabel.getText(), "t", "html");
                     status.setTextFill(Color.web("green"));
-                    status.setText(rb.getString("Status_success"));
+                    status.setText(rb.getString("Status_exportSuccess"));
                 } catch (Exception ex) {
                     status.setTextFill(Color.web("red"));
-                    status.setText(rb.getString("Status_error"));
+                    status.setText(rb.getString("Status_exportError"));
                 }
             }
         });
@@ -382,16 +385,95 @@ public class StockGameUI extends Application{
         agent.setOnAction((ActionEvent ) ->{
             if(playerNameLabel.getText() != null){
                 try {
-                    am.startAgent(playerNameLabel.getText());
+                    Player p = am.getPlayer(playerNameLabel.getText());
+                    am.startAgent(p.getName());
+                    status.setTextFill(Color.web("green"));
+                    status.setText(rb.getString("Status_agentSuccess"));
                 } catch (Exception ex) {
-                    Logger.getLogger(StockGameUI.class.getName()).log(Level.SEVERE, null, ex);
+                    status.setTextFill(Color.web("red"));
+                    status.setText(rb.getString("Status_agentError"));
                 }
             }
         });
         
         //Buy-Button
+        buy.setOnAction((ActionEvent t) -> {
+            buySellPane.getChildren().clear();
+            shareDropDownData.clear();
+            for(Share s : spp.getAllSharesAsSnapshot()){
+                shareDropDownData.add(s.getName());
+            }
+            shareDropDown.setItems(shareDropDownData);
+            shareDropDown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> ov, String old, String neu) {
+                    selectedShareToTrade = neu;
+                }
+            });
+            buySellPane.add(shareDropDown, 1, 1);
+            buySellPane.add(number, 2, 1);
+            buySellPane.add(buyOk, 3, 1);
+            buySellPane.add(abbort, 4, 1);
+        });
+        
+        
+        //Buy-Ok-Button
+        buyOk.setOnAction((ActionEvent t) -> {       
+            try {
+                int n = Integer.parseInt(number.getText());
+                am.buyShare(playerNameLabel.getText(), selectedShareToTrade, n);
+                status.setTextFill(Color.web("green"));
+                status.setText(rb.getString("Status_bought"));
+                number.setText("");
+                listSharesOfPlayer(am.getPlayer(playerNameLabel.getText()));
+                buySellPane.getChildren().clear();
+            } catch (Exception ex) {
+                status.setTextFill(Color.web("red"));
+                status.setText(rb.getString("Status_buyError"));
+            }
+        });
+        
         
         //Sell-Button
+        sell.setOnAction((ActionEvent t) -> {
+            buySellPane.getChildren().clear();
+            shareDropDownData.clear();
+            for(ShareItem s : sharesOfPlayer){
+                shareDropDownData.add(s.getName());
+            }
+            shareDropDown.setItems(shareDropDownData);
+            shareDropDown.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> ov, String old, String neu) {
+                    selectedShareToTrade = neu;
+                }
+            });
+            buySellPane.add(shareDropDown, 1, 1);
+            buySellPane.add(number, 2, 1);
+            buySellPane.add(sellOk, 3, 1);
+            buySellPane.add(abbort, 4, 1);
+        });
+
+        //Buy-Ok-Button
+        sellOk.setOnAction((ActionEvent t) -> {       
+            try {
+                int n = Integer.parseInt(number.getText());
+                am.sellShare(playerNameLabel.getText(), selectedShareToTrade, n);
+                status.setTextFill(Color.web("green"));
+                status.setText(rb.getString("Status_sold"));
+                number.setText("");
+                listSharesOfPlayer(am.getPlayer(playerNameLabel.getText()));
+                buySellPane.getChildren().clear();
+            } catch (Exception ex) {
+                status.setTextFill(Color.web("red"));
+                status.setText(rb.getString("Status_sellError"));
+            }
+        });
+        
+        //Abbort-Button
+        abbort.setOnAction((ActionEvent t) -> {
+            buySellPane.getChildren().clear();
+        });
     }
     
     
@@ -414,6 +496,9 @@ public class StockGameUI extends Application{
         getTrans.setText(rb.getString("Button_trans"));
         agent.setText(rb.getString("Button_agent"));
         shares_head.setText(rb.getString("Shares"));
+        abbort.setText(rb.getString("Button_abbort"));
+        buyOk.setText(rb.getString("Button_buy"));
+        sellOk.setText(rb.getString("Button_sell"));
         if(!(playerCashValue.getText().equals(""))){
             playerCashValue.setText(rb.getString("CashAccountValue")+" "+playerCashValue.getText().split(": ")[1].split(" ")[0]+" "+rb.getString("Currency"));
         }
@@ -445,6 +530,25 @@ public class StockGameUI extends Application{
             leftPane.add(kurs, 15, i);
             i++;
         }
+    }
+    
+    public static void listSharesOfPlayer(Player p){
+        String value = decimalFormat.format(((double) (p.getCashAccount().getWert()/100))*Double.valueOf(rb.getString("CurrencyExchangeValue")));
+        playerCashValue.setText(rb.getString("CashAccountValue")+" "+value+" "+rb.getString("Currency"));
+        sharesOfPlayer = p.getDepositAccount().getPakete();
+        GridPane list = new GridPane();
+        list.setHgap(5);
+        list.setVgap(5);
+        int j = 1;
+        for(ShareItem paket : sharesOfPlayer){
+            Text name = new Text(paket.getName());
+            Text anzahl = new Text(String.valueOf(paket.getAnzahl()));
+            list.add(name, 1, j);
+            list.add(anzahl, 20, j);
+            j++;
+        }
+        buySellPane.getChildren().clear();
+        shareList.setContent(list);
     }
     
     public static void updateShares(){

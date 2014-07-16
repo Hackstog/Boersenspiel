@@ -22,6 +22,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.text.Font;
 import javafx.scene.control.ScrollPane;
 import javafx.application.Application;
+import javafx.scene.paint.Color;
 
 public class ParameterPopUp extends Application{
     private final Scene scene = new Scene(new VBox(), 300, 200);
@@ -159,6 +160,8 @@ public class ParameterPopUp extends Application{
             ConstantValues.setBuyWhen((int) sliderBuyWhen.getValue());
             ConstantValues.setSellDiff((int) sliderSellDiff.getValue());
             ConstantValues.setSellPerc((int) sliderSellPerc.getValue());
+            StockGameUI.status.setTextFill(Color.web("green"));
+            StockGameUI.status.setText(StockGameUI.rb.getString("Status_changeSuccess"));
             secondaryStage.close();
         });
         
