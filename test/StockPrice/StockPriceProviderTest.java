@@ -15,7 +15,7 @@ import Assets.Share;
  * JUnit-Test zur Klasse ShareItem
  */
 public class StockPriceProviderTest {
-    Share share = new Share ("Aktienname", 100);
+    Share share = new Share ("Aktienname", "ID", 100);
     StockPriceProvider spp = new ConstStockPriceProvider();
     
     /**

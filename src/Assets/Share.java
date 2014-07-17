@@ -2,7 +2,7 @@
  * Share.java
  * Autor:     Daniel Heigl <daniel.heigl@hs-augsburg.de>
  * Datum:     29.05.2014
- * Version:   2.2
+ * Version:   2.4
  */
 
 
@@ -15,14 +15,16 @@ import java.util.List;
  */
 public class Share extends Asset implements Comparable<Share>{
     private List<Long> lastRates = new ArrayList<>();
+    private String googleID;
     
     /**
      * Legt ein neues Share-Objekt mit den als Parameter angegebenen Namen und Kurs an
      * @param name: Name der Aktie als String
      * @param kurs: Kurs der Aktie als long
      */
-    public Share(String name, long kurs){
+    public Share(String name, String googleID, long kurs){
         this.name = name;
+        this.googleID = googleID;
         this.wert = kurs;
     }
     
@@ -88,5 +90,13 @@ public class Share extends Asset implements Comparable<Share>{
      */
     public List<Long> getLastRates(){
         return lastRates;
+    }
+    
+    /**
+     * Liefert die GoogleID der Aktie zurück
+     * @return 
+     */
+    public String getGoogleID(){
+        return googleID;
     }
 }

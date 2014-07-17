@@ -19,8 +19,8 @@ public class ShareDepositAccountTest {
      * Mit diesen 2 Aktienpakete erstellen (Zur einfacheren Berechnung haben beide Pakete den Wert 500)
      * Damit ShareDepositAccount anlegen
      */
-    private final Share s1 = new Share("Aktie1", 100);
-    private final Share s2 = new Share("Aktie2", 50);
+    private final Share s1 = new Share("Aktie1", "ID", 100);
+    private final Share s2 = new Share("Aktie2", "ID", 50);
     private final ShareItem p1 = new ShareItem(s1, 5);
     private final ShareItem p2 = new ShareItem(s2, 10);
     private final ShareDepositAccount depot;

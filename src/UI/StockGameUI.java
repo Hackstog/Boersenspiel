@@ -13,6 +13,8 @@ import Assets.ShareItem;
 import StockPrice.StockPriceProvider;
 import StockPrice.HistoricalStockPriceProvider;
 import StockPrice.RandomStockPriceProvider;
+import StockPrice.RandomStockPriceProvider;
+import StockPrice.OnlineStockPriceProvider;
 import Player.Player;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -53,6 +55,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -73,13 +76,13 @@ public class StockGameUI extends Application{
         spp.startUpdate();
         decimalFormat.setMinimumFractionDigits(2);
         
-        try {          
-            am.createPlayer("Daniel");
-            am.buyShare("Daniel", "Audi", 3);
-            am.buyShare("Daniel", "Google", 10);
-        } catch (Exception ex) {
-            Logger.getLogger(StockGameUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {          
+//            am.createPlayer("Daniel");
+//            am.buyShare("Daniel", "Audi", 3);
+//            am.buyShare("Daniel", "Google", 10);
+//        } catch (Exception ex) {
+//            Logger.getLogger(StockGameUI.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
     
     /**
@@ -105,7 +108,6 @@ public class StockGameUI extends Application{
     private final Menu provider = new Menu(rb.getString("MenuItem_provider"));
     private final Menu menuHelp = new Menu("?");
     private final MenuItem exit = new MenuItem(rb.getString("MenuItem_exit"));
-    private final MenuItem restart = new MenuItem(rb.getString("MenuItem_restart"));
     private final MenuItem createPlayer = new MenuItem(rb.getString("MenuItem_createPlayer"));
     private final MenuItem deletePlayer = new MenuItem(rb.getString("MenuItem_deletePlayer"));
     private final MenuItem parameter = new MenuItem(rb.getString("MenuItem_parameter"));    
@@ -115,11 +117,13 @@ public class StockGameUI extends Application{
     private final ToggleGroup providers = new ToggleGroup();
     private static final ToggleGroup shares = new ToggleGroup();
     private final RadioMenuItem lang_de = new RadioMenuItem("Deutsch");
-    private final RadioMenuItem lang_en = new RadioMenuItem("Englisch");
+    private final RadioMenuItem lang_enGB = new RadioMenuItem("Englisch (GB)");
+    private final RadioMenuItem lang_enUS = new RadioMenuItem("Englisch (US)");
     private final RadioMenuItem lang_it = new RadioMenuItem("Italiano");
     private final RadioMenuItem lang_fr = new RadioMenuItem("Français");
     private final RadioMenuItem provider_random = new RadioMenuItem(rb.getString("Provider_random"));
     private final RadioMenuItem provider_historical = new RadioMenuItem(rb.getString("Provider_historical"));
+    private final RadioMenuItem provider_online = new RadioMenuItem(rb.getString("Provider_online"));
     private final List<RadioButton> shareButtons = new ArrayList<>();
     private static final ObservableList<Player> playerDropDownData = FXCollections.observableArrayList();
     private static final ObservableList<String> shareDropDownData = FXCollections.observableArrayList();
@@ -149,16 +153,17 @@ public class StockGameUI extends Application{
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle(rb.getString("WindowTitle"));
         //Erzeugt das Menu
-        menuStockGame.getItems().add(restart);
         menuStockGame.getItems().add(exit);
         menuPlayer.getItems().add(createPlayer);
         menuPlayer.getItems().add(deletePlayer);
         language.getItems().add(lang_de);
-        language.getItems().add(lang_en);
+        language.getItems().add(lang_enUS);
+        language.getItems().add(lang_enGB);
         language.getItems().add(lang_it);
         language.getItems().add(lang_fr);
         lang_de.setToggleGroup(languages);
-        lang_en.setToggleGroup(languages);
+        lang_enUS.setToggleGroup(languages);
+        lang_enGB.setToggleGroup(languages);
         lang_it.setToggleGroup(languages);
         lang_fr.setToggleGroup(languages);
         languages.selectToggle(lang_de);
@@ -167,6 +172,7 @@ public class StockGameUI extends Application{
         provider.getItems().add(provider_historical);
         provider_random.setToggleGroup(providers);
         provider_historical.setToggleGroup(providers);
+        provider_online.setToggleGroup(providers);
         providers.selectToggle(provider_historical);
         menuSettings.getItems().add(provider);
         menuSettings.getItems().add(parameter);
@@ -243,10 +249,10 @@ public class StockGameUI extends Application{
         //Buy/Sell Bereich
         rightPane.add(buySellPane, 1, 8);
         
-        //Statusleiste
-        status.setPadding(new Insets(20, 0, 0, 20));
+        //Statusleiste 
+       status.setPadding(new Insets(20, 0, 0, 10));
 
-        
+
         gridPane.add(leftPane, 1, 1);
         gridPane.add(graphPane, 1, 2);
         borderPane.setTop(menuBar);
@@ -289,7 +295,8 @@ public class StockGameUI extends Application{
                 XYChart.Series series = new XYChart.Series();
                 int j = 0;
                 for(long l : graphEntries){
-                    series.getData().add(new XYChart.Data(j, l/100));
+                    Double d = (l/100)/(Double.valueOf(rb.getString("CurrencyExchangeValue")));
+                    series.getData().add(new XYChart.Data(j, d));
                     j++;
                 }
                 chart.getData().clear();
@@ -304,14 +311,6 @@ public class StockGameUI extends Application{
             System.exit(0);
         });
         
-        //Spiel neu starten
-        restart.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-
-            }
-        });
-        
         //Spracheinstellung
         lang_de.setOnAction((ActionEvent t) -> {
             rb = ResourceBundle.getBundle("de", Locale.GERMANY);
@@ -320,9 +319,16 @@ public class StockGameUI extends Application{
             decimalFormat.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.GERMANY)); 
             setLanguage();
         });
-        lang_en.setOnAction((ActionEvent t) -> {
-            rb = ResourceBundle.getBundle("en", Locale.US);
-            status.setText("Language changed to englisch");
+        lang_enGB.setOnAction((ActionEvent t) -> {
+            rb = ResourceBundle.getBundle("enUS", Locale.US);
+            status.setText("Language changed to englisch (Great Britain)");
+            decimalFormat.setCurrency(Currency.getInstance(Locale.UK));
+            decimalFormat.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.UK)); 
+            setLanguage();
+        });
+        lang_enUS.setOnAction((ActionEvent t) -> {
+            rb = ResourceBundle.getBundle("enGB", Locale.US);
+            status.setText("Language changed to englisch (United States)");
             decimalFormat.setCurrency(Currency.getInstance(Locale.US));
             decimalFormat.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.US)); 
             setLanguage();
@@ -350,6 +356,11 @@ public class StockGameUI extends Application{
            StockGameUI.spp = new RandomStockPriceProvider();
            spp.startUpdate();
            status.setText(rb.getString("Status_providerRand"));
+        });
+        provider_online.setOnAction((ActionEvent t) -> {
+            StockGameUI.spp = new OnlineStockPriceProvider();
+            spp.startUpdate();
+            status.setText(rb.getString("Status_providerOnline"));
         });
         
         //About-Popup
@@ -526,7 +537,6 @@ public class StockGameUI extends Application{
         abbort.setText(rb.getString("Button_abbort"));
         buyOk.setText(rb.getString("Button_buy"));
         sellOk.setText(rb.getString("Button_sell"));
-        restart.setText(rb.getString("MenuItem_restart"));
         if(!(playerCashValue.getText().equals(""))){
             playerCashValue.setText(rb.getString("CashAccountValue")+" "+playerCashValue.getText().split(": ")[1].split(" ")[0]);
         }
@@ -553,7 +563,7 @@ public class StockGameUI extends Application{
             }
             r.setToggleGroup(shares);
             leftPane.add(r, 1, i);
-            String value = decimalFormat.format(((double) (s.getWert()/100))*Double.valueOf(rb.getString("CurrencyExchangeValue")));
+            String value = decimalFormat.format(((double) (s.getWert()/100))/Double.valueOf(rb.getString("CurrencyExchangeValue")));
             Label kurs = new Label(value);
             leftPane.add(kurs, 15, i);
             i++;
@@ -572,7 +582,7 @@ public class StockGameUI extends Application{
             try {
                 Text name = new Text(paket.getName());
                 Text anzahl = new Text(String.valueOf(paket.getAnzahl()));
-                double shareValue = (am.getShare(paket.getName()).getWert()*paket.getAnzahl())*(Double.valueOf(rb.getString("CurrencyExchangeValue")));
+                double shareValue = (am.getShare(paket.getName()).getWert()*paket.getAnzahl())/(Double.valueOf(rb.getString("CurrencyExchangeValue")));
                 Text wert = new Text(decimalFormat.format((double) shareValue/100));
                 list.add(name, 1, j);
                 list.add(anzahl, 16, j);

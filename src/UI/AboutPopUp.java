@@ -30,7 +30,7 @@ public class AboutPopUp extends Application{
         
         Text title = new Text(StockGameUI.rb.getString("WindowTitle"));
         title.setFont(new Font(24));
-        Text version = new Text("Version:   9.1");
+        Text version = new Text("Version:   10.0");
         Text hsa = new Text("Hochschule Augsburg");
         Text praktikum = new Text("Praktikum Programmieren 2 - Studiengang Bachelor Informatik");
         Text ss = new Text("Sommersemester 2014");

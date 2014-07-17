@@ -18,7 +18,7 @@
         <div style="width:470px">
             <h1>Börsenspiel</h1>
             <p>Hochschule Augsburg<br />Praktikum Programmieren 2  -  Studiengang Bachelor Informatik<br />Sommersemester 2014</p>
-            <p>Autor:  Daniel Heigl &lt;daniel.heigl@hs-augsburg.de&gt;<br />Aktuelle Version:  5.0b</p>
+            <p>Autor:  Daniel Heigl &lt;daniel.heigl@hs-augsburg.de&gt;<br />Aktuelle Version:  10.0</p>
         </div>
         
         <h1 style="margin-bottom: -30px">Changelog</h1>
@@ -190,11 +190,35 @@
         </ul>
         <ul>
             <li>Version 9.0</li>
-            <li>Graphische Oberfläche erstellt</li>
+            <li>Klasse <i>StockGameUI</i> erstellt (Hauptfenster des Spiels)</li>
             <li>Methode <i>removePlayer</i> in <i>AccountManager</i> ergänzt</li>
+            <li>Methode <i>getLastShareRates</i> in <i>Share</i> erstellt (speichert bei Kursupdate die vergangenen Werte) für Kursgraph</li>
         </ul>
         
         
+        <h2>2014-07-15</h2>
+        <ul>
+            <li>Version 9.1</li>
+            <li>Klassen <i>AboutPopUp</i>, <i>HelpPopUp</i>, <i>CreatePlayerPopUp</i>, <i>DeletePlayerPopUp</i> und <i>PrameterPopUp</i></li>
+        </ul>
+        
+        
+        <h2>2014-07-16</h2>
+        <ul>
+            <li>Version 9.2</li>
+            <li>Eingaben mit Enter besttigbar gemacht</li>
+            <li>Im Hauptfenster Statuszeile ergänzt die Exception + Bestätigungsmeldungen anzeigt</li>
+        </ul>
+        
+        
+        <h2>2014-07-17</h2>
+        <ul>
+            <li>Version 10.0</li>
+            <li>Klasse <i>OnlineStockPriceProvider</i> hinzugefügt zum abrufen aktueller Kurse aus dem Internet</li>
+            <li>In Klasse <i>Share</i> Parameter GoogleID ergänzt</li>
+        </ul>
+                
+                
         <br /><br /><h2>To do:</h2>
         <ul class="todo">
             <li>TradeAgent: Kontostand sinkt mit der Zeit</li>

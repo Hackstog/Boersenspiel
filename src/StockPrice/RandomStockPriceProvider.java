@@ -15,6 +15,8 @@ import HelpClasses.ConstantValues;
  * Zufälliger Kurs für eine Aktie
  */
 public class RandomStockPriceProvider extends StockPriceProvider{
+    Random rand = new Random();
+    
     /**
      * Ändert dem Kurs um einen Zufallswert zwischen 0 und 10
      * Die Richtung der Änderung wird durch eine zweite Zufallszahl bestimmt
@@ -22,17 +24,21 @@ public class RandomStockPriceProvider extends StockPriceProvider{
      */
     @Override
     public void updateShareRate(Share share){
-        Random rand = new Random();
         long diff = rand.nextInt(ConstantValues.getMaxStockChange()+1);
-        long vorzeichen = rand.nextInt(3);
+        long vorzeichen;
+        if(share.getWert() > 150){
+            vorzeichen = rand.nextInt(3);
+        }else{
+            vorzeichen = rand.nextInt(4);
+        }
         //Zum Teste des TradeAgent: Kurse sinken nur
         //vorzeichen = 2;
         long aktuell = share.getWert();
         
         if(vorzeichen == 1){
-            share.setWert(aktuell+diff);
-        }else if(vorzeichen == 2){
             share.setWert(aktuell-diff);
+        }else if(vorzeichen > 1){
+            share.setWert(aktuell+diff);
         }
     }
 }

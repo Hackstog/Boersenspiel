@@ -22,7 +22,7 @@ public class ConstantValues {
     /**
      * Legt den maximalen Wert fest, um den der RandomStockPriceProvider den Aktienkurs ändert
      */
-    public static int maxStockChange = 10;
+    public static int maxStockChange = 5000;
     public static int getMaxStockChange(){return maxStockChange;}
     public static void setMaxStockChange(int i){maxStockChange = i;}
             
