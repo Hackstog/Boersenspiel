@@ -1,9 +1,9 @@
 /**
- * AboutPopUp.java
- * Autor:   Daniel Heigl <daniel.heigl@hs-augsburg.de>
- * Datum:   14.07.2014
- * Version: 1.0
- */
+* AboutPopUp.java
+* Autor: Daniel Heigl <daniel.heigl@hs-augsburg.de>
+* Datum: 14.07.2014
+* Version: 1.0
+*/
 
 
 package UI;
@@ -30,12 +30,12 @@ public class AboutPopUp extends Application{
         
         Text title = new Text(StockGameUI.rb.getString("WindowTitle"));
         title.setFont(new Font(24));
-        Text version = new Text("Version:   10.0");
+        Text version = new Text("Version: 10.0");
         Text hsa = new Text("Hochschule Augsburg");
         Text praktikum = new Text("Praktikum Programmieren 2 - Studiengang Bachelor Informatik");
         Text ss = new Text("Sommersemester 2014");
-        Text autor = new Text("Autor:     Daniel Heigl");
-        Text email = new Text("               daniel.heigl@hs-augsburg.de");
+        Text autor = new Text("Autor: Daniel Heigl");
+        Text email = new Text(" daniel.heigl@hs-augsburg.de");
         Button ok = new Button(StockGameUI.rb.getString("Button_ok"));
         
         gridPane.add(title, 1, 1);

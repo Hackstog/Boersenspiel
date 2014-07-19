@@ -1,9 +1,9 @@
 /**
- * ParameterPopUp.java
- * Autor:   Daniel Heigl <daniel.heigl@hs-augsburg.de>
- * Datum:   14.07.2014
- * Version: 1.0
- */
+* ParameterPopUp.java
+* Autor: Daniel Heigl <daniel.heigl@hs-augsburg.de>
+* Datum: 14.07.2014
+* Version: 1.0
+*/
 
 
 package UI;
@@ -61,7 +61,7 @@ public class ParameterPopUp extends Application{
         gridPane.add(sliderKapital, 1, 5);
         
         Text transactions = new Text(StockGameUI.rb.getString("Param_maxTransactions"));
-        gridPane.add(transactions, 1, 6);        
+        gridPane.add(transactions, 1, 6);
         Slider sliderTrans = new Slider();
         sliderTrans.setMin(10);
         sliderTrans.setMax(500);
@@ -74,7 +74,7 @@ public class ParameterPopUp extends Application{
         gridPane.add(sliderTrans, 1, 7);
         
         Text stockchange = new Text(StockGameUI.rb.getString("Param_maxStockChange"));
-        gridPane.add(stockchange, 1, 8);        
+        gridPane.add(stockchange, 1, 8);
         Slider sliderStockChange = new Slider();
         sliderStockChange.setMin(10);
         sliderStockChange.setMax(500);
@@ -103,7 +103,7 @@ public class ParameterPopUp extends Application{
         gridPane.add(sliderBuyWhen, 1, 13);
         
         Text buyMax = new Text(StockGameUI.rb.getString("Param_buyMax"));
-        gridPane.add(buyMax, 1, 14);   
+        gridPane.add(buyMax, 1, 14);
         Slider sliderBuyMax = new Slider();
         sliderBuyMax.setMin(10);
         sliderBuyMax.setMax(100);
@@ -129,7 +129,7 @@ public class ParameterPopUp extends Application{
         gridPane.add(sliderSellDiff, 1, 17);
         
         Text sellPerc = new Text(StockGameUI.rb.getString("Param_sellPerc"));
-        gridPane.add(sellPerc, 1, 18);           
+        gridPane.add(sellPerc, 1, 18);
         Slider sliderSellPerc = new Slider();
         sliderSellPerc.setMin(0);
         sliderSellPerc.setMax(100);

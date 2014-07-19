@@ -1,0 +1,7 @@
+Jul 19, 2014 7:21:12 PM AccountManager.AccountManagerProxy invoke
+INFORMATION: Aufgerufene Methode: getStockPriceProvider
+
+Jul 19, 2014 7:21:12 PM AccountManager.AccountManagerProxy invoke
+INFORMATION: Parameter: Keine Parameter!
+Jul 19, 2014 7:21:12 PM AccountManager.AccountManagerProxy invoke
+INFORMATION: R&uuml;ckgabewert: (StockPrice.StockPriceProvider) StockPrice.HistoricalStockPriceProvider@7a7b0070

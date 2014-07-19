@@ -55,9 +55,7 @@ import javafx.stage.Stage;
 public class StockGameLauncher extends Application{
     public static void main (String[] args) throws IOException{
         final HistoricalStockPriceProvider spp= new HistoricalStockPriceProvider();
-        //AccountManagerImpl direkt anlegen
         final AccountManagerImpl ami = new AccountManagerImpl(spp);
-        //AccountManager über Proxy anlegen
         final AccountManager am;
         final StockGameCommandProcessor commandProcessor;
         
@@ -66,8 +64,7 @@ public class StockGameLauncher extends Application{
 	properties.load(inputStream);
         Locale.setDefault(new Locale(properties.getProperty("user.language"),properties.getProperty("user.country")));
 	System.setProperty("user.country",properties.getProperty("user.country"));
-	System.out.println(Locale.getDefault());
-        
+	System.out.println(Locale.getDefault());        
         String language = new BufferedReader(new FileReader("language.properties")).readLine().split("=")[1];
         
 	System.out.println(System.getProperty("user.country"));
@@ -78,24 +75,22 @@ public class StockGameLauncher extends Application{
         
         try {
             am = (AccountManager) AccountManagerProxy.newInstance(ami);
-//            final StockPriceViewer sviewer = new StockPriceViewer(spp);
-//            final PlayerViewer pviewer = new PlayerViewer(am);
-//            final AllViewer viewer = new AllViewer(am, resourceBundle);
+            final StockPriceViewer sviewer = new StockPriceViewer(spp);
+            final PlayerViewer pviewer = new PlayerViewer(am);
+            final AllViewer viewer = new AllViewer(am, resourceBundle);
             commandProcessor = new StockGameCommandProcessor(am);
 //            sviewer.start();
 //            pviewer.start();
 //            viewer.start();  
-//            commandProcessor.process();
-        } catch (IOException | SecurityException ex) {
+            commandProcessor.process();
+        } catch (Exception ex) {
             Logger.getLogger(StockGameLauncher.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-                System.out.println();
         }
     }
     
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        StockGameUI stockGameUI = new StockGameUI();
-        stockGameUI.start(primaryStage);
+    public void start(Stage primaryStage) throws Exception {       
+        StockGameUI stockGame = new StockGameUI();
+        stockGame.start(primaryStage);
     }
 }

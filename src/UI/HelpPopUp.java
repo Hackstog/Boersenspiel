@@ -1,9 +1,9 @@
 /**
- * HelpPopUp.java
- * Autor:   Daniel Heigl <daniel.heigl@hs-augsburg.de>
- * Datum:   14.07.2014
- * Version: 2.0
- */
+* HelpPopUp.java
+* Autor: Daniel Heigl <daniel.heigl@hs-augsburg.de>
+* Datum: 14.07.2014
+* Version: 2.0
+*/
 
 
 package UI;
