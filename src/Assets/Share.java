@@ -22,9 +22,8 @@ public class Share extends Asset implements Comparable<Share>{
      * @param name: Name der Aktie als String
      * @param kurs: Kurs der Aktie als long
      */
-    public Share(String name, String googleID, long kurs){
+    public Share(String name, long kurs){
         this.name = name;
-        this.googleID = googleID;
         this.wert = kurs;
     }
     

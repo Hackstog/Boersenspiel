@@ -19,6 +19,7 @@ public class AccountManagerImplTest {
      */
     private final ConstStockPriceProvider spp = new ConstStockPriceProvider();
     private final AccountManagerImpl am = new AccountManagerImpl(spp);
+    private final Share Audi = new Share("Audi", 100);
 
     
     /**
@@ -55,7 +56,7 @@ public class AccountManagerImplTest {
     public void testBuyShare() throws Exception{
         am.createPlayer("Spieler");
         am.buyShare("Spieler", "Audi", 10);
-        int aktienImDepot = am.getPlayer("Spieler").getDepositAccount().search("Audi").getAnzahl();
+        int aktienImDepot = am.getPlayer("Spieler").getDepositAccount().getPakete().get(Audi);
         assertEquals("Methode buyShare()", aktienImDepot, 10);
     }
     
@@ -67,7 +68,7 @@ public class AccountManagerImplTest {
         am.createPlayer("Spieler");
         am.buyShare("Spieler", "Audi", 50);
         am.sellShare("Spieler", "Audi", 40);
-        int aktienImDepot = am.getPlayer("Spieler").getDepositAccount().search("Audi").getAnzahl();
+        int aktienImDepot = am.getPlayer("Spieler").getDepositAccount().getPakete().get(Audi);
         assertEquals("Methode buyShare()", aktienImDepot, 10);
     }
     
@@ -88,7 +89,7 @@ public class AccountManagerImplTest {
     public void testGetValueOfDepositAccount() throws Exception{
         am.createPlayer("Spieler");
         am.buyShare("Spieler", "Audi", 10);
-        assertEquals("Methode getValueOfDepositAccount()", am.getValueOfDepositAccount("Spieler"), 3000);
+        assertEquals("Methode getValueOfDepositAccount()", am.getValueOfDepositAccount("Spieler"), 100000);
     }
     
     /**
@@ -102,7 +103,7 @@ public class AccountManagerImplTest {
     @Test
     public void testGetKurs() throws Exception{
         Share Audi = am.getShare("Audi");
-        assertEquals("Methode getKurs()", am.getKurs(Audi), 300);
+        assertEquals("Methode getKurs()", am.getKurs(Audi), 10000);
     }
     
     /**

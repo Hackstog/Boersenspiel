@@ -17,8 +17,8 @@ public class ShareTest {
     /**
      * Zwei Aktien anlegen
      */
-    private final Share share1 = new Share("ShareName", "ID", 500);
-    private final Share share2 = new Share("ShareName", "ID", 500);
+    private final Share share1 = new Share("ShareName", 500);
+    private final Share share2 = new Share("ShareName", 500);
     
     
     /**

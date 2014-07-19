@@ -18,7 +18,7 @@ public class ShareItemTest {
      * Neue Aktie anlegen
      * Mit dieser Aktie neues ShareItem zum Testen anlegen
      */
-    private Share s = new Share("TestAktie", "ID", 100);
+    private Share s = new Share("TestAktie", 100);
     private ShareItem paket = new ShareItem(s, 50);
     
     /**
@@ -60,6 +60,6 @@ public class ShareItemTest {
      */
     @Test
     public void testToString(){
-        assertEquals("Aufruf von toString()", paket.toString(), "50 Stück von Aktie TestAktie");
+        assertEquals("Aufruf von toString()", paket.toString(), "50x TestAktie");
     }
 }

@@ -15,7 +15,7 @@ import Assets.Share;
  * JUnit-Test zur Klasse ShareItem
  */
 public class StockPriceProviderTest {
-    Share share = new Share ("Aktienname", "ID", 100);
+    Share share = new Share ("Aktienname", 100);
     StockPriceProvider spp = new ConstStockPriceProvider();
     
     /**
@@ -33,7 +33,7 @@ public class StockPriceProviderTest {
      */
     @Test
     public void testGetCurrentShareRate() throws Exception{
-        assertEquals("Aufruf der Methode getCurrentShareRate()", spp.getCurrentShareRate("Audi"), 300);
+        assertEquals("Aufruf der Methode getCurrentShareRate()", spp.getCurrentShareRate("Audi"), 10000);
     }
     
     /**
@@ -57,6 +57,6 @@ public class StockPriceProviderTest {
      */
     @Test
     public void testGetNumberOfShares(){
-        assertEquals("Aufruf der Methode getNumberOfShares()", spp.getNumberOfShares(), 7);
+        assertEquals("Aufruf der Methode getNumberOfShares()", spp.getNumberOfShares(), 9);
     }
 }

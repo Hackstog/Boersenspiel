@@ -9,42 +9,52 @@
 package Assets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.Map;
 
 /**
  * Aktiendepot eines Spieler als Verkettete Liste von Aktienpaketen
  */
 public class ShareDepositAccount extends Asset{
-    private final List<ShareItem> pakete = new ArrayList<>();
-
+    private final TreeMap<Share, Integer> shareDepot = new TreeMap<>();
+    
     /**
      * Fügt ein ShareItem-Element in die Liste ein
-     * @param paket: Aktienpaket als ShareItem
+     * @param s
+     * @param n
      */
-    public void insert(ShareItem paket){
-        pakete.add(paket);
+    public void insert(Share s, int n){
+        shareDepot.put(s, n);
     }
     
     /**
-     * Durchsucht die Liste nach einem Element und liefert eine Referenz darauf zurück
-     * Wird das Element nicht gefunden wird 'null' zurückgeliefert
-     * @param shareName: Name der Aktie als String
-     * @return AktienPaket als ShareItem
+     * Ändert die Anzahl der Aktien, falls diese schon in der Map vorhanden sind
+     * Erzeugt einen neuen Eintrag, falls nicht
      */
-    public ShareItem search(String shareName){
-        for (ShareItem s : pakete){
-            if(shareName.equals(s.getName())){
-                return s;
-            }
+    public void addShares(Share s, int n){
+        if(shareDepot.containsKey(s)){
+            n = n + shareDepot.get(s);
         }
-        return null;
+        shareDepot.put(s, n);
     }
     
+    
+    public void removeShares(Share s, int n){
+        int inDepot = shareDepot.get(s);
+        if(inDepot == n){
+            shareDepot.remove(s);
+        }else{
+        shareDepot.put(s, shareDepot.get(s)-n);
+        }
+    }
+    
+        
     /**
      * Entfernt ein ShareItem-Element aus der Liste
-     * @param paket: Aktienpaket als ShareItem
+     * @param s
      */
-    public void remove(ShareItem paket){
-        pakete.remove(paket);
+    public void remove(Share s){
+        shareDepot.remove(s);
     }
     
     
@@ -54,9 +64,14 @@ public class ShareDepositAccount extends Asset{
      */
     @Override
     public long getWert(){
-        long i = 0;
-        i = pakete.stream().map((s) -> s.getWert()).reduce(i, (accumulator, _item) -> accumulator + _item);
-        return i;
+        long l = 0;
+        for(Map.Entry<Share, Integer> entry : shareDepot.entrySet()){
+            Share s = entry.getKey();
+            int n = entry.getValue();
+            
+            l += n * s.getWert();
+        }
+        return l;
     }
     
     /**
@@ -66,14 +81,15 @@ public class ShareDepositAccount extends Asset{
     @Override
     public String toString(){
         String result = "";        
-        for (ShareItem s : pakete){
+        for(Map.Entry<Share, Integer> entry : shareDepot.entrySet()){
+            Share s = entry.getKey();
             result += s.toString();
             result += "<br>";
         }
         return result;
     }
 
-    public List<ShareItem> getPakete(){
-        return pakete;
+    public TreeMap<Share, Integer> getPakete(){
+        return shareDepot;
     }
 }

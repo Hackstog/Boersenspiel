@@ -9,7 +9,6 @@
 package Player;
 import AccountManager.AccountManager;
 import AccountManager.AccountManagerImpl;
-import Assets.ShareItem;
 import Assets.Share;
 import HelpClasses.ConstantValues;
 import Timer.StockTimer;
@@ -17,6 +16,7 @@ import StockPrice.StockPriceProvider;
 import java.util.Random;
 import java.util.TimerTask;
 import java.util.TreeSet;
+import java.util.TreeMap;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -125,9 +125,8 @@ public class TradeAgent{
                  * Setzt den Wert im Array 'kauf' zurück auf den Ausgangswert 
                  */
                 String shareName = sharesAsArray[i].getName();
-                ShareItem paket = am.getPlayer(player).getDepositAccount().search(shareName);
-                if(paket!=null){
-                    int anzahl = ConstantValues.getSellPerc()/100 * paket.getAnzahl();
+                if(am.getPlayer(player).getDepositAccount().getPakete().containsKey(sharesAsArray[i])){
+                    int anzahl = ConstantValues.getSellPerc()/100 * am.getPlayer(player).getDepositAccount().getPakete().get(sharesAsArray[i]);
                     am.sellShare(player, shareName, anzahl);
                     kauf[i]=Long.MAX_VALUE-1000;
                 }

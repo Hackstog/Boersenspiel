@@ -9,7 +9,6 @@
 package UI;
 import AccountManager.AccountManagerImpl;
 import Assets.Share;
-import Assets.ShareItem;
 import StockPrice.StockPriceProvider;
 import StockPrice.HistoricalStockPriceProvider;
 import StockPrice.RandomStockPriceProvider;
@@ -23,6 +22,8 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.Map;
 import java.util.Currency;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -67,7 +68,7 @@ public class StockGameUI extends Application{
     private static StockPriceProvider spp = new HistoricalStockPriceProvider();
     static AccountManagerImpl am = new AccountManagerImpl(spp);
     static Timer timer = new java.util.Timer();
-    private static List<ShareItem> sharesOfPlayer = new ArrayList<>();
+    private static TreeMap<Share, Integer> sharesOfPlayer = new TreeMap<>();
     static ResourceBundle rb = ResourceBundle.getBundle("de", Locale.getDefault());
     static DecimalFormat decimalFormat = new DecimalFormat("###,###,##0.00 ¤");	
  
@@ -470,7 +471,8 @@ public class StockGameUI extends Application{
         sell.setOnAction((ActionEvent t) -> {
             buySellPane.getChildren().clear();
             shareDropDownData.clear();
-            for(ShareItem s : sharesOfPlayer){
+            for(Map.Entry<Share, Integer> entry : sharesOfPlayer.entrySet()){
+                Share s = entry.getKey();
                 shareDropDownData.add(s.getName());
             }
             shareDropDown.setItems(shareDropDownData);
@@ -580,11 +582,11 @@ public class StockGameUI extends Application{
         list.setHgap(5);
         list.setVgap(5);
         int j = 1;
-        for(ShareItem paket : sharesOfPlayer){
+        for(Map.Entry<Share, Integer> entry : sharesOfPlayer.entrySet()){
             try {
-                Text name = new Text(paket.getName());
-                Text anzahl = new Text(String.valueOf(paket.getAnzahl()));
-                double shareValue = (am.getShare(paket.getName()).getWert()*paket.getAnzahl())/(Double.valueOf(rb.getString("CurrencyExchangeValue")));
+                Text name = new Text(entry.getKey().toString());
+                Text anzahl = new Text(String.valueOf(entry.getValue()));
+                double shareValue = (am.getShare(entry.getKey().getName()).getWert() * entry.getValue())/(Double.valueOf(rb.getString("CurrencyExchangeValue")));
                 Text wert = new Text(decimalFormat.format((double) shareValue/100));
                 list.add(name, 1, j);
                 list.add(anzahl, 16, j);

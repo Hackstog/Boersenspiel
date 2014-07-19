@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import Assets.Share;
-import Assets.ShareItem;
 import Player.Player;
 import Player.TradeAgent;
 import HelpClasses.CollectionObjectFinder;
@@ -152,7 +151,7 @@ public class AccountManagerImpl implements AccountManager{
     @Override
     public void buyShare(String playerName, String shareName, int anzahl) throws Exception{
         Share share = getShare(shareName);
-        ShareItem paket = new ShareItem(share, anzahl);
+        Player p = getPlayer(playerName);
          /**
          * Try-Block:
          * Wenn negative Anzahl an Aktien gekauft werden soll (Oder 0) -> Exception
@@ -163,20 +162,14 @@ public class AccountManagerImpl implements AccountManager{
         try{
             if(anzahl <= 0){
                 throw new WrongNumberException();
-            }else if(paket.getWert() > getPlayer(playerName).getCashAccount().getWert()){
+            }else if(anzahl*share.getWert() > getPlayer(playerName).getCashAccount().getWert()){
                 throw new NotEnoughMoneyException();
             }else{
-                if(getPlayer(playerName).getDepositAccount().search(shareName)==null){
-                    getPlayer(playerName).getDepositAccount().insert(paket);
-//                    logger.fine("Neues Aktienpaket anlegen für Aktie '"+shareName+"'!");
-                }else{
-                    getPlayer(playerName).getDepositAccount().search(shareName).changeAnzahl(anzahl);
-//                    logger.fine("Anzahl von Aktie '"+shareName+"' um"+anzahl+" erhöht!");
-                }
-                getPlayer(playerName).getCashAccount().changeWert(-1*anzahl*share.getWert());
-                getPlayer(playerName).getTransactions().add(new Transaction(share, anzahl, "Bought"));
-                if(getPlayer(playerName).getTransactions().size() > ConstantValues.getMaxTransactions()){
-                    getPlayer(playerName).getTransactions().remove(0);
+                p.getDepositAccount().addShares(share, anzahl);
+                p.getCashAccount().changeWert(-1*anzahl*share.getWert());
+                p.getTransactions().add(new Transaction(share, anzahl, "Bought"));
+                if(p.getTransactions().size() > ConstantValues.getMaxTransactions()){
+                    p.getTransactions().remove(0);
                 }
             }
         }catch(Exception e){
@@ -196,6 +189,7 @@ public class AccountManagerImpl implements AccountManager{
     @Override
     public void sellShare(String playerName, String shareName, int anzahl) throws Exception{ 
         Share share = getShare(shareName);
+        Player p = getPlayer(playerName);
         /**
          * Try-Block:
          * Wenn negative Anzahl an Aktien Verkauft werden soll (oder 0) -> Exception
@@ -204,23 +198,17 @@ public class AccountManagerImpl implements AccountManager{
          * Ansonsten Anzahl im Paket öndern
          */
         try{
-            ShareItem paket = this.getPlayer(playerName).getDepositAccount().search(shareName);
+            int inDepot = p.getDepositAccount().getPakete().get(share);
             if(anzahl <= 0){
                 throw new WrongNumberException();
-            }else if(anzahl > paket.getAnzahl()){
+            }else if(anzahl > inDepot){
                 throw new NotEnoughSharesException();
             }else{
-                if(anzahl == paket.getAnzahl()){
-                    this.getPlayer(playerName).getDepositAccount().remove(paket);
-//                    logger.fine("Komplettes Aktienpaket "+shareName+" gelöscht!");
-                }else{
-                    paket.changeAnzahl(-anzahl);
-//                    logger.fine("Anzahl der Aktien "+shareName+" um "+anzahl+" verringert!");
-                }
-                getPlayer(playerName).getCashAccount().changeWert(anzahl*share.getWert());
-                getPlayer(playerName).getTransactions().add(new Transaction(share, anzahl, "Sold"));
-                if(getPlayer(playerName).getTransactions().size() > ConstantValues.getMaxTransactions()){
-                    getPlayer(playerName).getTransactions().remove(0);
+                p.getDepositAccount().removeShares(share, anzahl);
+                p.getCashAccount().changeWert(anzahl*share.getWert());
+                p.getTransactions().add(new Transaction(share, anzahl, "Sold"));
+                if(p.getTransactions().size() > ConstantValues.getMaxTransactions()){
+                    p.getTransactions().remove(0);
                 }
             }
         }catch(Exception e){

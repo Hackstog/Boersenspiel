@@ -9,7 +9,6 @@
 package Viewer;
 import AccountManager.AccountManager;
 import Assets.Share;
-import Assets.ShareItem;
 import Player.Player;
 import StockPrice.StockPriceProvider;
 import Timer.StockTimer;

@@ -33,15 +33,15 @@ abstract public class StockPriceProvider implements StockPriceInfo{
 
     public StockPriceProvider() {
         this.shares = new TreeSet<>();
-        shares.add(new Share("Audi", "FRA%3ANSU", 10000));
-        shares.add(new Share("VW", "ETR%3AVOW", 10000));
-        shares.add(new Share("BMW", "ETR%3ABMW", 10000));
-        shares.add(new Share("Apple", "NASDAQ%3AAAPL", 10000));
-        shares.add(new Share("Siemens", "FRA%3ASIE", 10000));
-        shares.add(new Share("Google", "NASDAQ%3AGOOGL", 10000));
-        shares.add(new Share("Microsoft", "NASDAQ%3AMSFT", 10000));
-        shares.add(new Share("Intel", "NASDAQ%3AINTC", 10000));
-        shares.add(new Share("Facebook", "NASDAQ%3AFB", 10000));
+        shares.add(new Share("Audi", 10000));
+        shares.add(new Share("VW", 10000));
+        shares.add(new Share("BMW", 10000));
+        shares.add(new Share("Apple", 10000));
+        shares.add(new Share("Siemens", 10000));
+        shares.add(new Share("Google", 10000));
+        shares.add(new Share("Microsoft", 10000));
+        shares.add(new Share("Intel", 10000));
+        shares.add(new Share("Facebook", 10000));
     }
     
     /**
