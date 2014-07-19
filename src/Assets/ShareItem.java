@@ -9,8 +9,11 @@
 package Assets;
 
 /**
- * Aktienpaket bestehend aus einer Aktie und der Anzahl
+ * Verwaltet Aktienpakete als Komtination aus Aktie + Anzahl
+ * Nach umstellen von ShareDepositAccount auf HashMap nicht länger benötigt
+ * @deprecated
  */
+@Deprecated
 public class ShareItem extends Asset{
     private final Share shares;
     private int anzahl;
