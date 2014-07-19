@@ -17,7 +17,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.application.Application;
-import javafx.geometry.Pos;
 
 public class HelpPopUp extends Application{
     private final Scene scene = new Scene(new VBox(), 800, 600);

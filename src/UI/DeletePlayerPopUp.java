@@ -9,8 +9,6 @@
 package UI;
 import AccountManager.AccountManager;
 import Player.Player;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;

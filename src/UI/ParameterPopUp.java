@@ -8,21 +8,19 @@
 
 package UI;
 import HelpClasses.ConstantValues;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.text.Font;
 import javafx.scene.control.ScrollPane;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
+import javafx.geometry.Insets;
 
 public class ParameterPopUp extends Application{
     private final Scene scene = new Scene(new VBox(), 300, 200);
@@ -39,6 +37,7 @@ public class ParameterPopUp extends Application{
         secondaryStage.setTitle(StockGameUI.rb.getString("MenuItem_parameter"));
         gridPane.setVgap(20);
         gridPane.setHgap(20);
+        gridPane.setPadding(new Insets(10, 10, 30, 10));
         buttonPane.setHgap(20);
         
         Text header = new Text (StockGameUI.rb.getString("MenuItem_parameter"));
@@ -79,7 +78,7 @@ public class ParameterPopUp extends Application{
         Slider sliderStockChange = new Slider();
         sliderStockChange.setMin(10);
         sliderStockChange.setMax(500);
-        sliderStockChange.setValue(ConstantValues.getMaxStockChange());
+        sliderStockChange.setValue(ConstantValues.getMaxStockChange()/100);
         sliderStockChange.setShowTickLabels(true);
         sliderStockChange.setShowTickMarks(true);
         sliderStockChange.setMajorTickUnit(100);
@@ -142,9 +141,8 @@ public class ParameterPopUp extends Application{
         sliderSellPerc.setBlockIncrement(5);
         gridPane.add(sliderSellPerc, 1, 19);
         
-        Button ok = new Button(StockGameUI.rb.getString("Button_ok"));
+
         ok.setDefaultButton(true);
-        Button abbort = new Button(StockGameUI.rb.getString("Button_abbort"));
         buttonPane.add(ok, 1, 1);
         buttonPane.add(abbort, 2, 1);
         gridPane.add(buttonPane, 1, 22);

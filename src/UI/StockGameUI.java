@@ -141,8 +141,8 @@ public class StockGameUI extends Application{
     final static Label status = new Label();
     final static Label shares_head = new Label (rb.getString("Shares"));
     final static Label choosenShare = new Label();
-    final static NumberAxis xAxis = new NumberAxis("", 0d, 20d, 1);
-    final static NumberAxis yAxis = new NumberAxis("", 0d, 1000, 50);
+    final static NumberAxis xAxis = new NumberAxis("", 0, 20, 1);
+    final static NumberAxis yAxis = new NumberAxis("", 0, 1200, 100);
     final static LineChart<Number,Number> chart = new LineChart<>(xAxis,yAxis);
     static String selectedShareToTrade;
     static int selectedBuyAmount;
@@ -206,12 +206,14 @@ public class StockGameUI extends Application{
         //Aktienkurs als Graph
         xAxis.minHeight(250);
         xAxis.setMinorTickVisible(false);
+        xAxis.setTickLabelsVisible(false);
         chart.minWidth(100);
         chart.maxWidth(100);
         chart.minHeight(100);
         chart.maxHeight(100);
         chart.setLegendVisible(false);
-        
+        chart.setAnimated(false);
+
         
         //Liste der Spieler als DropDown-Menü
         listPlayer();
